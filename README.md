@@ -15,10 +15,25 @@ Interest in Robotic, Kubernetes, Docker, Ansible, Terraform for SysOps & DevOps
 ##
 
 2. Docker
+
+##
+
 3. Kubernetes
+
+##
+
 4. Ansible
+
+##
+
 5. Terraform
+
+##
+
 6. Python Shell etc
+
+##
+
 7. Author Heinrich Hochkofler
 
 <img src="./curriculum/foto_HH.jpg" width="100"/>
