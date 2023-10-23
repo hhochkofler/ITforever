@@ -19,7 +19,7 @@ INDEX
 6. Python Shell etc
 7. Author Heinrich Hochkofler
 
-<img src="./curriculum/foto_HH.png" width="100"/>
+<img src="./curriculum/foto_HH.jpg" width="100"/>
 
    1.  [curriculum vitae](./curriculum)
    
