@@ -33,9 +33,8 @@ Interest in Robotic, Kubernetes, Docker, Ansible, Terraform for SysOps & DevOps
 
 ##
 
-7. Author Heinrich Hochkofler
-
 <img src="./curriculum/foto_HH.jpg" width="100"/>
 
+7. Author Heinrich Hochkofler
    1.  [curriculum vitae](./curriculum)
    
