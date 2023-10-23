@@ -24,11 +24,11 @@ Interest in Cloud-AWS, Kubernetes, Docker, Ansible, Terraform, Robotic for SysOp
 
 ##
 
-3. Docker
+3. Kubernetes
 
 ##
 
-4. Kubernetes
+4. Docker
 
 ##
 
@@ -40,7 +40,7 @@ Interest in Cloud-AWS, Kubernetes, Docker, Ansible, Terraform, Robotic for SysOp
 
 ##
 
-7. Python Shell etc
+7. Python/Shell
 
 ##
 
