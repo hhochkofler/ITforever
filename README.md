@@ -20,6 +20,10 @@ Interest in Robotic, Kubernetes, Docker, Ansible, Terraform for SysOps & DevOps
 
 ##
 
+<img src="./under_construction.png" width="100"/>
+
+##
+
 3. Docker
 
 ##
@@ -39,5 +43,5 @@ Interest in Robotic, Kubernetes, Docker, Ansible, Terraform for SysOps & DevOps
 7. Python Shell etc
 
 ##
-  
+
    
