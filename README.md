@@ -12,6 +12,8 @@ Interest in Robotic, Kubernetes, Docker, Ansible, Terraform for SysOps & DevOps
    3. [Linux Shell routines](./software-shell)
    4. [hardware](./hardware)
 
+##
+
 2. Docker
 3. Kubernetes
 4. Ansible
