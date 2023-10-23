@@ -1,5 +1,5 @@
 # Heinrich Hochkofler
-Interest in Robotic, Kubernetes, Docker, Ansible, Terraform for SysOps & DevOps
+Interest in Cloud-AWS, Kubernetes, Docker, Ansible, Terraform, Robotic for SysOps/DevOps
 
 ## INDEX
 
