@@ -1,0 +1,13 @@
+login as: admin
+Welcome to meye-29cb01e5!
+admin@192.168.0.33's password:
+[root@meye-29cb01e5 ~]# crontab -l
+# crontab de ROOT
+* * * * * sh /data/scripts/ping.sh
+[root@meye-29cb01e5 ~]# cat /data/scripts/ping.sh
+#!/bin/bash
+ping 192.168.0.12 -c 3
+ping 192.168.0.19 -c 3
+ping 192.168.0.18 -c 3
+ping 192.168.0.23 -c 3
+[root@meye-29cb01e5 ~]#
