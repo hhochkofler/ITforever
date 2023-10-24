@@ -13,7 +13,7 @@ Interest in Cloud-AWS, Kubernetes, Docker, Ansible, Terraform, Robotic for SysOp
 <img src="./Wall-e_Docs/wall-e.png" width="100"/>
 
 2. Robotic control: Wall-e construction in Raspberry Pi W
-   1. [Wall-e docs-prices](./Wall-e_Docs)
+   1. [Wall-e part-list & price references](./Wall-e_Docs)
    2. [Python StepMotors programs](./software-python)
    3. [Linux Shell routines](./software-shell)
    4. [hardware](./hardware)
