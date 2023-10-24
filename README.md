@@ -6,7 +6,7 @@ Interest in Cloud-AWS, Kubernetes, Docker, Ansible, Terraform, Robotic for SysOp
 <img src="./curriculum/foto_HH.jpg" width="100"/>
 
 1. Author Heinrich Hochkofler
-   1.  [curriculum vitae](./curriculum)
+   1.  [Curriculum Vitae](./curriculum)
 
 ##
 
@@ -15,8 +15,8 @@ Interest in Cloud-AWS, Kubernetes, Docker, Ansible, Terraform, Robotic for SysOp
 2. Robotic control: Wall-e construction in Raspberry Pi W
    1. [Wall-e part-list & price references](./Wall-e_Docs)
    2. [Hardware](./hardware)
-   3. [Python StepMotors programs](./software-python)
-   4. [Linux Shell routines](./software-shell)
+   3. [Python step-motors programs](./software-python)
+   4. [Linux shell menus & routines](./software-shell)
 
 ##
 
