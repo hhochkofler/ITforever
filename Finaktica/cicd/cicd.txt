@@ -1,1 +1,6 @@
+CI/CD 
 
+Para esta sección, necesitaremos que crees los pipelines para la implementación de la aplicación descrita anteriormente. Puedes elegir la herramienta de tu preferencia, Jenkins File, MakeFile, Code Pipeline, GitHub Actions u otra de tu preferencia, eres libre de elegir la herramienta que te resulte más cómoda. No obstante, debes proporcionar algunos aportes como beneficios o desventajas de la herramienta que elijas. Para el pipeline en sí, queremos que: 
+
+•	Crees un pipeline que permita la implementación de sus aplicaciones en tres ambientes distintos (dev, stg, prod) sobre tres regiones diferentes (virginia, Ohio y oregon), es decir la aplicación sobre un ambiente específico debe ser desplegada sobre una región determinada (ejemplo dev sobre Ohio). Esto debe ser parametrizable (ambientes y regiones) desde el archivo de propiedades. 
+•	Describa y configure 2 estrategias de despliegues y actualización de aplicaciones sobre contenedores en AWS (fargate), detalle las ventajas de cada una de estas estrategias, y en que tipo de aplicaciones es beneficioso o no utilizar una u otra. Recuerde documentar y evidencias las pruebas realizadas y deje como variables parametrizables el poder utilizar una estrategia u otra en su código IaaC. 
