@@ -26,6 +26,7 @@ Interest in Cloud-AWS, Kubernetes, Docker, Ansible, Terraform, Robotic for SysOp
 ##
 
 3. Kubernetes
+   1. [Finaktica Docs](./Finaktica_Docs)
 
 ##
 
