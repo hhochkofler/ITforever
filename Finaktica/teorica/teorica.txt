@@ -1,1 +1,11 @@
+Prueba teórica o de conocimientos técnicos 
 
+El conjunto de escenarios presentados a continuación pretender entender un poco su capacidad de resolución de problemas o incidentes, no hay respuesta mala o incorrecta. No obstante, debe explicar detalladamente y justificar las soluciones ofrecidas a cada uno de los casos expuestos de manera escrita. 
+
+1. Actualmente dispone de un servidor web alojado sobre su LAN (e.g 192.168.0.10), en el cual tiene instalado un apache-tomcat sobre la cual ha alojado la página web de la empresa por el puerto 8080, y Web Services desplegados sobre el puerto 8443. Se solicita hacer uso del dominio mipruebaFinaktiva.com.co para publicar a internet tanto la página web, como los web services. No obstante, se requiere que ambos sean accesibles por la misma URL y puerto (HTTPS -443). Describa al menos 2 soluciones para resolver este requerimiento, es libre de disponer el uso de cualquier dispositivo y/o aplicación conocida para dar solución a lo anterior. 
+
+2. Un cliente indica que está intentando conectarse los servicios 
+https://mipruebaFinaktiva.com.co/servicio
+pero que cuando carga la página web en su navegador no carga. sin embargo, al realizar usted la prueba internamente si logra ver disponible los servicios. Describa y enuncie 5 razones por la cual puede estar pasando el problema y como ayudar al cliente a resolverla con su ayuda. 
+
+3. Un balanceador de carga dispone de diferentes algoritmos de balanceo como: round robin, round robin weight, least connection, source, URI para tráfico TCP y HTTP. Describa cada uno de estos y en qué casos ustedes utilizarían cada uno de estos, su comportamiento para tráfico TCP y HTTP, además de las ventajas y desventajas de estos. 
