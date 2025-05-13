@@ -1,0 +1,88 @@
+[root@localhost ~]#  sudo dnf install -y dnf-plugins-core
+Última comprobación de caducidad de metadatos hecha hace 4:20:38, el mié 13 sep 2023 14:14:08.
+El paquete dnf-plugins-core-4.4.2-1.fc37.noarch ya está instalado.
+Dependencias resueltas.
+Nada por hacer.
+¡Listo!
+[root@localhost ~]# sudo dnf config-manager --add-repo https://rpm.releases.hashicorp.com/fedora/hashicorp.repo
+Agregando repositorio de: https://rpm.releases.hashicorp.com/fedora/hashicorp.repo
+[root@localhost ~]# sudo dnf -y install terraform
+Hashicorp Stable - x86_64                                                                                                                    733 kB/s | 1.2 MB     00:01
+Última comprobación de caducidad de metadatos hecha hace 0:00:04, el mié 13 sep 2023 18:35:47.
+Dependencias resueltas.
+=============================================================================================================================================================================
+ Paquete                                      Arquitectura                       Versión                                         Repositorio                            Tam.
+=============================================================================================================================================================================
+Instalando:
+ terraform                                    x86_64                             1.5.7-1                                         hashicorp                              21 M
+Instalando dependencias:
+ git                                          x86_64                             2.41.0-1.fc37                                   updates                                54 k
+ git-core                                     x86_64                             2.41.0-1.fc37                                   updates                               4.4 M
+ git-core-doc                                 noarch                             2.41.0-1.fc37                                   updates                               2.8 M
+ perl-Error                                   noarch                             1:0.17029-10.fc37                               fedora                                 41 k
+ perl-File-Find                               noarch                             1.40-494.fc37                                   updates                                26 k
+ perl-Git                                     noarch                             2.41.0-1.fc37                                   updates                                42 k
+ perl-TermReadKey                             x86_64                             2.38-14.fc37                                    fedora                                 36 k
+ perl-lib                                     x86_64                             0.65-494.fc37                                   updates                                16 k
+
+Resumen de la transacción
+=============================================================================================================================================================================
+Instalar  9 Paquetes
+
+Tamaño total de la descarga: 28 M
+Tamaño instalado: 99 M
+Descargando paquetes:
+(1/9): perl-Error-0.17029-10.fc37.noarch.rpm                                                                                                  38 kB/s |  41 kB     00:01
+(2/9): perl-TermReadKey-2.38-14.fc37.x86_64.rpm                                                                                               32 kB/s |  36 kB     00:01
+(3/9): git-2.41.0-1.fc37.x86_64.rpm                                                                                                           48 kB/s |  54 kB     00:01
+(4/9): perl-File-Find-1.40-494.fc37.noarch.rpm                                                                                               328 kB/s |  26 kB     00:00
+(5/9): perl-Git-2.41.0-1.fc37.noarch.rpm                                                                                                     493 kB/s |  42 kB     00:00
+(6/9): perl-lib-0.65-494.fc37.x86_64.rpm                                                                                                     172 kB/s |  16 kB     00:00
+(7/9): git-core-doc-2.41.0-1.fc37.noarch.rpm                                                                                                 2.8 MB/s | 2.8 MB     00:01
+(8/9): git-core-2.41.0-1.fc37.x86_64.rpm                                                                                                     3.3 MB/s | 4.4 MB     00:01
+(9/9): terraform-1.5.7-1.x86_64.rpm                                                                                                          4.6 MB/s |  21 MB     00:04
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Total                                                                                                                                        3.5 MB/s |  28 MB     00:08
+Hashicorp Stable - x86_64                                                                                                                     10 kB/s | 3.9 kB     00:00
+Importando llave GPG 0xA621E701:
+ ID usuario: "HashiCorp Security (HashiCorp Package Signing) <security+packaging@hashicorp.com>"
+ Huella    : 798A EC65 4E5C 1542 8C8E 42EE AA16 FCBC A621 E701
+ Desde     : https://rpm.releases.hashicorp.com/gpg
+La llave ha sido importada exitosamente
+Ejecutando verificación de operación
+Verificación de operación exitosa.
+Ejecutando prueba de operaciones
+Prueba de operación exitosa.
+Ejecutando operación
+  Preparando          :                                                                                                                                                  1/1
+  Instalando          : git-core-2.41.0-1.fc37.x86_64                                                                                                                    1/9
+  Instalando          : git-core-doc-2.41.0-1.fc37.noarch                                                                                                                2/9
+  Instalando          : perl-lib-0.65-494.fc37.x86_64                                                                                                                    3/9
+  Instalando          : perl-File-Find-1.40-494.fc37.noarch                                                                                                              4/9
+  Instalando          : perl-TermReadKey-2.38-14.fc37.x86_64                                                                                                             5/9
+  Instalando          : perl-Error-1:0.17029-10.fc37.noarch                                                                                                              6/9
+  Instalando          : git-2.41.0-1.fc37.x86_64                                                                                                                         7/9
+  Instalando          : perl-Git-2.41.0-1.fc37.noarch                                                                                                                    8/9
+  Instalando          : terraform-1.5.7-1.x86_64                                                                                                                         9/9
+  Ejecutando scriptlet: terraform-1.5.7-1.x86_64                                                                                                                         9/9
+  Verificando         : perl-Error-1:0.17029-10.fc37.noarch                                                                                                              1/9
+  Verificando         : perl-TermReadKey-2.38-14.fc37.x86_64                                                                                                             2/9
+  Verificando         : git-2.41.0-1.fc37.x86_64                                                                                                                         3/9
+  Verificando         : git-core-2.41.0-1.fc37.x86_64                                                                                                                    4/9
+  Verificando         : git-core-doc-2.41.0-1.fc37.noarch                                                                                                                5/9
+  Verificando         : perl-File-Find-1.40-494.fc37.noarch                                                                                                              6/9
+  Verificando         : perl-Git-2.41.0-1.fc37.noarch                                                                                                                    7/9
+  Verificando         : perl-lib-0.65-494.fc37.x86_64                                                                                                                    8/9
+  Verificando         : terraform-1.5.7-1.x86_64                                                                                                                         9/9
+
+Instalado:
+  git-2.41.0-1.fc37.x86_64                    git-core-2.41.0-1.fc37.x86_64         git-core-doc-2.41.0-1.fc37.noarch            perl-Error-1:0.17029-10.fc37.noarch
+  perl-File-Find-1.40-494.fc37.noarch         perl-Git-2.41.0-1.fc37.noarch         perl-TermReadKey-2.38-14.fc37.x86_64         perl-lib-0.65-494.fc37.x86_64
+  terraform-1.5.7-1.x86_64
+
+¡Listo!
+[root@localhost ~]#
+[root@localhost ~]# terraform -v
+Terraform v1.5.7
+on linux_amd64
+[root@localhost ~]#

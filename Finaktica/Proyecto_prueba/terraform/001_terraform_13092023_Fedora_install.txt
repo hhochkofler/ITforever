@@ -1,0 +1,34 @@
+
+--------------------------------------------------------------------------------------------------
+Pagina principal
+https://www.terraform.io
+--------------------------------------------------------------------------------------------------
+https://developer.hashicorp.com/terraform/downloads?product_intent=terraform
+Seleccionar Linux y Fedora
+--------------------------------------------------------------------------------------------------
+sudo dnf install -y dnf-plugins-core
+sudo dnf config-manager --add-repo https://rpm.releases.hashicorp.com/fedora/hashicorp.repo
+sudo dnf -y install terraform
+--------------------------------------------------------------------------------------------------
+faltante en main.tf
+https://registry.terraform.io/providers/kreuzwerker/docker/latest/docs
+
+terraform {
+  required_providers {
+    docker = {
+      source  = "kreuzwerker/docker"
+      version = "3.0.2"
+    }
+  }
+}
+
+provider "docker" {
+
+        }
+
+resource "docker_container" "fedora" {
+        name = "fedora01"
+        image = "fedora"
+        command = [ "/bin/bash","-c","while true; do sleep 60000; done" ]
+        }
+--------------------------------------------------------------------------------------------------
