@@ -1,0 +1,1043 @@
+
+[kubernetes@localhost ~]$
+login as: kubernetes
+kubernetes@192.168.1.79's password:
+Web console: https://localhost:9090/ or https://192.168.1.79:9090/
+
+Last login: Sat Jan 27 14:10:06 2024 from 192.168.1.31
+[kubernetes@localhost ~]$ }
+-bash: error sintáctico cerca del elemento inesperado `}'
+[kubernetes@localhost ~]$ sudo su -
+[root@localhost ~]# pwd
+/root
+[root@localhost ~]# cd /home
+[root@localhost home]# ls -ktr
+docker  ansible  aws-cli  terraform  git  aws-kube  cdk  kubernetes  nodejs
+[root@localhost home]# ls -lr
+total 4
+drwxr-xr-x.  4 kubernetes kubernetes  129 dic 11 14:51 terraform
+drwxr-xr-x.  3 root       root         71 ene 26 08:56 nodejs
+drwx------. 13 kubernetes kubernetes 4096 ene 25 15:35 kubernetes
+drwxr-xr-x.  3 kubernetes kubernetes   21 dic 21 14:55 git
+drwxr-xr-x.  2 kubernetes kubernetes    6 oct 28 11:03 docker
+drwxr-xr-x.  4 root       root         42 ene 23 12:16 cdk
+drwxr-xr-x.  3 root       root         54 dic 25 22:26 aws-kube
+drwxr-xr-x.  3 kubernetes kubernetes   37 dic  4 18:42 aws-cli
+drwxr-xr-x.  3 kubernetes kubernetes   26 oct 30 21:32 ansible
+[root@localhost home]# cd git
+[root@localhost git]# ls -ltr
+total 0
+drwxr-xr-x. 4 root root 33 dic 21 14:56 argo-cd
+[root@localhost git]#
+[root@localhost git]#
+[root@localhost git]#
+[root@localhost git]# pwd
+/home/git
+[root@localhost git]# mkdir actions-runner && cd actions-runner
+[root@localhost actions-runner]# ls -ltr
+total 0
+[root@localhost actions-runner]# pwd
+/home/git/actions-runner
+[root@localhost actions-runner]# curl -o actions-runner-linux-x64-2.312.0.tar.gz -L https://github.com/actions/runner/releases/download/v2.312.0/actions-runner-linux-x64-2.312.0.tar.gz
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+100  179M  100  179M    0     0  14.9M      0  0:00:12  0:00:12 --:--:-- 22.3M
+[root@localhost actions-runner]# echo "85c1bbd104d539f666a89edef70a18db2596df374a1b51670f2af1578ecbe031  actions-runner-linux-x64-2.312.0.tar.gz" | shasum -a 256 -c
+-bash: shasum: orden no encontrada
+[root@localhost actions-runner]# rpm -qa | grep -i sha
+shadow-utils-4.13-6.fc38.x86_64
+shared-mime-info-2.2-3.fc38.x86_64
+[root@localhost actions-runner]# man shasum
+Ninguna entrada del manual para shasum
+[root@localhost actions-runner]# man sha
+Ninguna entrada del manual para sha
+[root@localhost actions-runner]# sudo dnf provides shasum
+Última comprobación de caducidad de metadatos hecha hace 2:16:03, el sáb 27 ene 2024 21:45:08.
+perl-Digest-SHA-1:6.04-1.fc38.x86_64 : Perl extension for SHA-1/224/256/384/512
+Repositorio : fedora
+Resultado de:
+Archivo     : /usr/bin/shasum
+
+[root@localhost actions-runner]# sudo dnf install perl-Digest-SHA
+Última comprobación de caducidad de metadatos hecha hace 2:16:59, el sáb 27 ene 2024 21:45:08.
+Dependencias resueltas.
+==============================================================================================================================================================================================
+ Paquete                                           Arquitectura                             Versión                                            Repositorio                               Tam.
+==============================================================================================================================================================================================
+Instalando:
+ perl-Digest-SHA                                   x86_64                                   1:6.04-1.fc38                                      fedora                                    61 k
+Instalando dependencias:
+ perl-Digest                                       noarch                                   1.20-490.fc38                                      fedora                                    25 k
+
+Resumen de la transacción
+==============================================================================================================================================================================================
+Instalar  2 Paquetes
+
+Tamaño total de la descarga: 86 k
+Tamaño instalado: 152 k
+¿Está de acuerdo [s/N]?: s
+Descargando paquetes:
+(1/2): perl-Digest-1.20-490.fc38.noarch.rpm                                                                                                                    65 kB/s |  25 kB     00:00
+(2/2): perl-Digest-SHA-6.04-1.fc38.x86_64.rpm                                                                                                                 160 kB/s |  61 kB     00:00
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Total                                                                                                                                                          78 kB/s |  86 kB     00:01
+Ejecutando verificación de operación
+Verificación de operación exitosa.
+Ejecutando prueba de operaciones
+Prueba de operación exitosa.
+Ejecutando operación
+  Preparando          :                                                                                                                                                                   1/1
+  Instalando          : perl-Digest-1.20-490.fc38.noarch                                                                                                                                  1/2
+  Instalando          : perl-Digest-SHA-1:6.04-1.fc38.x86_64                                                                                                                              2/2
+  Ejecutando scriptlet: perl-Digest-SHA-1:6.04-1.fc38.x86_64                                                                                                                              2/2
+  Verificando         : perl-Digest-1.20-490.fc38.noarch                                                                                                                                  1/2
+  Verificando         : perl-Digest-SHA-1:6.04-1.fc38.x86_64                                                                                                                              2/2
+
+Instalado:
+  perl-Digest-1.20-490.fc38.noarch                                                            perl-Digest-SHA-1:6.04-1.fc38.x86_64
+
+¡Listo!
+[root@localhost actions-runner]# man shasum
+[root@localhost actions-runner]# echo "85c1bbd104d539f666a89edef70a18db2596df374a1b51670f2af1578ecbe031  actions-runner-linux-x64-2.312.0.tar.gz" | shasum -a 256 -c
+actions-runner-linux-x64-2.312.0.tar.gz: OK
+[root@localhost actions-runner]# ls -ltr
+total 184220
+-rw-r--r--. 1 root root 188638107 ene 27 23:50 actions-runner-linux-x64-2.312.0.tar.gz
+[root@localhost actions-runner]# tar xzf ./actions-runner-linux-x64-2.312.0.tar.gz
+[root@localhost actions-runner]# ls -ltr
+total 184260
+-rwxr-xr-x. 1 1001 docker        65 ene 16 22:54 safe_sleep.sh
+-rwxr-xr-x. 1 1001 docker      2537 ene 16 22:54 run.sh
+-rwxr-xr-x. 1 1001 docker      2522 ene 16 22:54 run-helper.sh.template
+-rw-r--r--. 1 1001 docker      1486 ene 16 22:54 run-helper.cmd.template
+-rwxr-xr-x. 1 1001 docker       646 ene 16 22:54 env.sh
+-rwxr-xr-x. 1 1001 docker      2458 ene 16 22:54 config.sh
+drwxr-xr-x. 6 1001 docker        76 ene 16 22:55 externals
+drwxr-xr-x. 4 1001 docker     12288 ene 16 22:55 bin
+-rw-r--r--. 1 root root   188638107 ene 27 23:50 actions-runner-linux-x64-2.312.0.tar.gz
+[root@localhost actions-runner]# df -h
+S.ficheros              Tamaño Usados  Disp Uso% Montado en
+devtmpfs                  4,0M      0  4,0M   0% /dev
+tmpfs                     2,0G      0  2,0G   0% /dev/shm
+tmpfs                     781M   1,6M  779M   1% /run
+/dev/mapper/fedora-root    15G    13G  2,2G  86% /
+tmpfs                     2,0G    12K  2,0G   1% /tmp
+/dev/nvme0n1p2            960M   225M  736M  24% /boot
+overlay                    15G    13G  2,2G  86% /var/lib/docker/overlay2/f1ad432d7496d6dc887e52d35bd690d04963cc3e9796401a7c7de4be7221e51f/merged
+tmpfs                     391M      0  391M   0% /run/user/1000
+[root@localhost actions-runner]# ./config.sh --url https://github.com/hhochkofler/ITforever --token AVZRF64H65QRQR4YEWDLUBLFWXSU4
+Must not run with sudo
+[root@localhost actions-runner]# id
+uid=0(root) gid=0(root) grupos=0(root) contexto=unconfined_u:unconfined_r:unconfined_t:s0-s0:c0.c1023
+[root@localhost actions-runner]# exit
+cerrar sesión
+[kubernetes@localhost ~]$ su -
+Contraseña:
+[root@localhost ~]# cd /home/git
+[root@localhost git]# ls -ltr
+total 4
+drwxr-xr-x. 4 root root     33 dic 21 14:56 argo-cd
+drwxr-xr-x. 4 1001 docker 4096 ene 16 22:55 actions-runner
+[root@localhost git]# cd actions-runner
+[root@localhost actions-runner]# ls -ltr
+total 184260
+-rwxr-xr-x. 1 1001 docker        65 ene 16 22:54 safe_sleep.sh
+-rwxr-xr-x. 1 1001 docker      2537 ene 16 22:54 run.sh
+-rwxr-xr-x. 1 1001 docker      2522 ene 16 22:54 run-helper.sh.template
+-rw-r--r--. 1 1001 docker      1486 ene 16 22:54 run-helper.cmd.template
+-rwxr-xr-x. 1 1001 docker       646 ene 16 22:54 env.sh
+-rwxr-xr-x. 1 1001 docker      2458 ene 16 22:54 config.sh
+drwxr-xr-x. 6 1001 docker        76 ene 16 22:55 externals
+drwxr-xr-x. 4 1001 docker     12288 ene 16 22:55 bin
+-rw-r--r--. 1 root root   188638107 ene 27 23:50 actions-runner-linux-x64-2.312.0.tar.gz
+[root@localhost actions-runner]# ./config.sh --url https://github.com/hhochkofler/ITforever --token AVZRF64H65QRQR4YEWDLUBLFWXSU4
+Must not run with sudo
+[root@localhost actions-runner]# ls -ltr
+total 184260
+-rwxr-xr-x. 1 1001 docker        65 ene 16 22:54 safe_sleep.sh
+-rwxr-xr-x. 1 1001 docker      2537 ene 16 22:54 run.sh
+-rwxr-xr-x. 1 1001 docker      2522 ene 16 22:54 run-helper.sh.template
+-rw-r--r--. 1 1001 docker      1486 ene 16 22:54 run-helper.cmd.template
+-rwxr-xr-x. 1 1001 docker       646 ene 16 22:54 env.sh
+-rwxr-xr-x. 1 1001 docker      2458 ene 16 22:54 config.sh
+drwxr-xr-x. 6 1001 docker        76 ene 16 22:55 externals
+drwxr-xr-x. 4 1001 docker     12288 ene 16 22:55 bin
+-rw-r--r--. 1 root root   188638107 ene 27 23:50 actions-runner-linux-x64-2.312.0.tar.gz
+[root@localhost actions-runner]# id
+uid=0(root) gid=0(root) grupos=0(root) contexto=unconfined_u:unconfined_r:unconfined_t:s0-s0:c0.c1023
+[root@localhost actions-runner]# cd bin
+[root@localhost bin]# ls -ltr
+total 77596
+-rwxr--r--. 1 1001 docker    18432 jun  5  2016 Minimatch.dll
+-rwxr--r--. 1 1001 docker    90624 mar 22  2017 Newtonsoft.Json.Bson.dll
+-rwxr--r--. 1 1001 docker    24880 jul 19  2017 System.Security.Cryptography.ProtectedData.dll
+-rwxr--r--. 1 1001 docker    27944 jul 19  2017 System.ServiceProcess.ServiceController.dll
+-rwxr--r--. 1 1001 docker    35080 jul 19  2017 System.Security.Cryptography.Pkcs.dll
+-rwxr--r--. 1 1001 docker    30832 feb  8  2018 Microsoft.IdentityModel.Logging.dll
+-rwxr--r--. 1 1001 docker   138352 feb  8  2018 Microsoft.IdentityModel.Tokens.dll
+-rwxr--r--. 1 1001 docker    90736 feb  8  2018 System.IdentityModel.Tokens.Jwt.dll
+-rwxr--r--. 1 1001 docker   184320 dic  5  2018 YamlDotNet.dll
+-rwxr--r--. 1 1001 docker    14720 abr 14  2020 Microsoft.Bcl.AsyncInterfaces.dll
+-rwxr--r--. 1 1001 docker    21368 abr  8  2021 System.Memory.Data.dll
+-rwxr--r--. 1 1001 docker    29296 oct 22  2021 System.IO.Hashing.dll
+-rwxr--r--. 1 1001 docker   179672 may 27  2022 System.Net.Http.Formatting.dll
+-rwxr--r--. 1 1001 docker   712464 mar  8  2023 Newtonsoft.Json.dll
+-rwxr--r--. 1 1001 docker   392736 nov 10 14:42 Azure.Core.dll
+-rwxr--r--. 1 1001 docker   243632 nov 13 15:43 Azure.Storage.Common.dll
+-rwxr--r--. 1 1001 docker  1308080 nov 13 15:44 Azure.Storage.Blobs.dll
+-rwxr--r--. 1 1001 docker   747936 dic  5 13:08 libcoreclrtraceptprovider.so
+-rwxr--r--. 1 1001 docker   738056 dic  5 13:13 libdbgshim.so
+-rwxr--r--. 1 1001 docker  2602272 dic  5 13:15 libmscordaccore.so
+-rwxr--r--. 1 1001 docker  1778936 dic  5 13:15 libmscordbi.so
+-rwxr--r--. 1 1001 docker  7360032 dic  5 13:15 libcoreclr.so
+-rwxr--r--. 1 1001 docker   145856 dic  5 13:15 createdump
+-rwxr--r--. 1 1001 docker  3359640 dic  5 13:16 libclrjit.so
+-rwxr--r--. 1 1001 docker    17160 dic  5 13:17 WindowsBase.dll
+-rwxr--r--. 1 1001 docker    16144 dic  5 13:17 System.Xml.XPath.dll
+-rwxr--r--. 1 1001 docker    18184 dic  5 13:17 System.Xml.XmlSerializer.dll
+-rwxr--r--. 1 1001 docker    16136 dic  5 13:17 System.Xml.XmlDocument.dll
+-rwxr--r--. 1 1001 docker    16136 dic  5 13:17 System.Xml.XDocument.dll
+-rwxr--r--. 1 1001 docker    16648 dic  5 13:17 System.Xml.Serialization.dll
+-rwxr--r--. 1 1001 docker    22176 dic  5 13:17 System.Xml.ReaderWriter.dll
+-rwxr--r--. 1 1001 docker    16648 dic  5 13:17 System.Xml.Linq.dll
+-rwxr--r--. 1 1001 docker    24840 dic  5 13:17 System.Xml.dll
+-rwxr--r--. 1 1001 docker    16664 dic  5 13:17 System.Windows.dll
+-rwxr--r--. 1 1001 docker    16136 dic  5 13:17 System.Web.dll
+-rwxr--r--. 1 1001 docker    15624 dic  5 13:17 System.ValueTuple.dll
+-rwxr--r--. 1 1001 docker    17160 dic  5 13:17 System.Transactions.dll
+-rwxr--r--. 1 1001 docker    15520 dic  5 13:17 System.Threading.Timer.dll
+-rwxr--r--. 1 1001 docker    16152 dic  5 13:17 System.Threading.ThreadPool.dll
+-rwxr--r--. 1 1001 docker    16032 dic  5 13:17 System.Threading.Thread.dll
+-rwxr--r--. 1 1001 docker    16032 dic  5 13:17 System.Threading.Tasks.Extensions.dll
+-rwxr--r--. 1 1001 docker    17056 dic  5 13:17 System.Threading.Tasks.dll
+-rwxr--r--. 1 1001 docker    16032 dic  5 13:17 System.Threading.Overlapped.dll
+-rwxr--r--. 1 1001 docker    16032 dic  5 13:17 System.Text.Encoding.Extensions.dll
+-rwxr--r--. 1 1001 docker    16032 dic  5 13:17 System.Text.Encoding.dll
+-rwxr--r--. 1 1001 docker    16664 dic  5 13:17 System.ServiceProcess.dll
+-rwxr--r--. 1 1001 docker    17568 dic  5 13:17 System.ServiceModel.Web.dll
+-rwxr--r--. 1 1001 docker    15624 dic  5 13:17 System.Security.SecureString.dll
+-rwxr--r--. 1 1001 docker    15640 dic  5 13:17 System.Security.Principal.dll
+-rwxr--r--. 1 1001 docker    18592 dic  5 13:17 System.Security.dll
+-rwxr--r--. 1 1001 docker    16544 dic  5 13:17 System.Runtime.Serialization.Xml.dll
+-rwxr--r--. 1 1001 docker    16152 dic  5 13:17 System.Runtime.Serialization.Json.dll
+-rwxr--r--. 1 1001 docker    17584 dic  5 13:17 System.Runtime.Serialization.dll
+-rwxr--r--. 1 1001 docker    16048 dic  5 13:17 System.Runtime.Loader.dll
+-rwxr--r--. 1 1001 docker    16544 dic  5 13:17 System.Runtime.Intrinsics.dll
+-rwxr--r--. 1 1001 docker    15520 dic  5 13:17 System.Runtime.Handles.dll
+-rwxr--r--. 1 1001 docker    18192 dic  5 13:17 System.Runtime.Extensions.dll
+-rwxr--r--. 1 1001 docker    42768 dic  5 13:17 System.Runtime.dll
+-rwxr--r--. 1 1001 docker    16032 dic  5 13:17 System.Resources.ResourceManager.dll
+-rwxr--r--. 1 1001 docker    15640 dic  5 13:17 System.Resources.Reader.dll
+-rwxr--r--. 1 1001 docker    16032 dic  5 13:17 System.Reflection.Primitives.dll
+-rwxr--r--. 1 1001 docker    15624 dic  5 13:17 System.Reflection.Extensions.dll
+-rwxr--r--. 1 1001 docker    16144 dic  5 13:17 System.Reflection.Emit.Lightweight.dll
+-rwxr--r--. 1 1001 docker    16032 dic  5 13:17 System.Reflection.Emit.ILGeneration.dll
+-rwxr--r--. 1 1001 docker    16048 dic  5 13:17 System.Reflection.Emit.dll
+-rwxr--r--. 1 1001 docker    16544 dic  5 13:17 System.Reflection.dll
+-rwxr--r--. 1 1001 docker    16032 dic  5 13:17 System.Numerics.Vectors.dll
+-rwxr--r--. 1 1001 docker    16136 dic  5 13:17 System.Numerics.dll
+-rwxr--r--. 1 1001 docker    18184 dic  5 13:17 System.Net.dll
+-rwxr--r--. 1 1001 docker    15520 dic  5 13:17 System.IO.UnmanagedMemoryStream.dll
+-rwxr--r--. 1 1001 docker    15624 dic  5 13:17 System.IO.FileSystem.Primitives.dll
+-rwxr--r--. 1 1001 docker    24240 dic  5 13:17 System.IO.FileSystem.dll
+-rwxr--r--. 1 1001 docker    16048 dic  5 13:17 System.IO.dll
+-rwxr--r--. 1 1001 docker    16152 dic  5 13:17 System.IO.Compression.FileSystem.dll
+-rwxr--r--. 1 1001 docker    15536 dic  5 13:17 System.Globalization.Extensions.dll
+-rwxr--r--. 1 1001 docker    16152 dic  5 13:17 System.Globalization.dll
+-rwxr--r--. 1 1001 docker    16152 dic  5 13:17 System.Globalization.Calendars.dll
+-rwxr--r--. 1 1001 docker    16656 dic  5 13:17 System.Dynamic.Runtime.dll
+-rwxr--r--. 1 1001 docker    21152 dic  5 13:17 System.Drawing.dll
+-rwxr--r--. 1 1001 docker    50848 dic  5 13:17 System.dll
+-rwxr--r--. 1 1001 docker    16544 dic  5 13:17 System.Diagnostics.Tracing.dll
+-rwxr--r--. 1 1001 docker    16048 dic  5 13:17 System.Diagnostics.Tools.dll
+-rwxr--r--. 1 1001 docker    16048 dic  5 13:17 System.Diagnostics.Debug.dll
+-rwxr--r--. 1 1001 docker    16032 dic  5 13:17 System.Diagnostics.Contracts.dll
+-rwxr--r--. 1 1001 docker    25760 dic  5 13:17 System.Data.dll
+-rwxr--r--. 1 1001 docker    16032 dic  5 13:17 System.Data.DataSetExtensions.dll
+-rwxr--r--. 1 1001 docker    24224 dic  5 13:17 System.Core.dll
+-rwxr--r--. 1 1001 docker    19720 dic  5 13:17 System.Configuration.dll
+-rwxr--r--. 1 1001 docker    17568 dic  5 13:17 System.ComponentModel.DataAnnotations.dll
+-rwxr--r--. 1 1001 docker    15520 dic  5 13:17 System.Buffers.dll
+-rwxr--r--. 1 1001 docker    15520 dic  5 13:17 System.AppContext.dll
+-rwxr--r--. 1 1001 docker   101640 dic  5 13:17 netstandard.dll
+-rwxr--r--. 1 1001 docker    58544 dic  5 13:17 mscorlib.dll
+-rwxr--r--. 1 1001 docker    18184 dic  5 13:17 Microsoft.VisualBasic.dll
+-rwxr--r--. 1 1001 docker   137360 dic  5 13:17 libSystem.Security.Cryptography.Native.OpenSsl.so
+-rwxr--r--. 1 1001 docker    14472 dic  5 13:17 libSystem.Net.Security.Native.so
+-rwxr--r--. 1 1001 docker    92272 dic  5 13:17 libSystem.Native.so
+-rwxr--r--. 1 1001 docker   940184 dic  5 13:17 libSystem.IO.Compression.Native.so
+-rwxr--r--. 1 1001 docker    72104 dic  5 13:17 libSystem.Globalization.Native.so
+-rwxr--r--. 1 1001 docker 10424480 dic  5 13:23 System.Private.CoreLib.dll
+-rwxr--r--. 1 1001 docker   383328 dic  5 13:34 libhostpolicy.so
+-rwxr--r--. 1 1001 docker   424280 dic  5 13:34 libhostfxr.so
+-rwxr--r--. 1 1001 docker  1232560 dic  5 13:37 Microsoft.VisualBasic.Core.dll
+-rwxr--r--. 1 1001 docker   841888 dic  5 13:37 Microsoft.CSharp.dll
+-rwxr--r--. 1 1001 docker   238752 dic  5 13:37 System.Collections.Concurrent.dll
+-rwxr--r--. 1 1001 docker    59040 dic  5 13:37 Microsoft.Win32.Registry.dll
+-rwxr--r--. 1 1001 docker    24736 dic  5 13:37 Microsoft.Win32.Primitives.dll
+-rwxr--r--. 1 1001 docker   600240 dic  5 13:37 System.Collections.Immutable.dll
+-rwxr--r--. 1 1001 docker   268960 dic  5 13:37 System.Collections.dll
+-rwxr--r--. 1 1001 docker    95904 dic  5 13:37 System.Collections.Specialized.dll
+-rwxr--r--. 1 1001 docker   101040 dic  5 13:37 System.Collections.NonGeneric.dll
+-rwxr--r--. 1 1001 docker    38560 dic  5 13:37 System.ComponentModel.EventBasedAsync.dll
+-rwxr--r--. 1 1001 docker    18592 dic  5 13:37 System.ComponentModel.dll
+-rwxr--r--. 1 1001 docker   187568 dic  5 13:37 System.ComponentModel.Annotations.dll
+-rwxr--r--. 1 1001 docker   751776 dic  5 13:37 System.ComponentModel.TypeConverter.dll
+-rwxr--r--. 1 1001 docker    75952 dic  5 13:37 System.ComponentModel.Primitives.dll
+-rwxr--r--. 1 1001 docker   190624 dic  5 13:38 System.Console.dll
+-rwxr--r--. 1 1001 docker   384688 dic  5 13:38 System.Diagnostics.DiagnosticSource.dll
+-rwxr--r--. 1 1001 docker  3016864 dic  5 13:38 System.Data.Common.dll
+-rwxr--r--. 1 1001 docker   264864 dic  5 13:38 System.Diagnostics.Process.dll
+-rwxr--r--. 1 1001 docker    41632 dic  5 13:38 System.Diagnostics.FileVersionInfo.dll
+-rwxr--r--. 1 1001 docker   133280 dic  5 13:38 System.Diagnostics.TraceSource.dll
+-rwxr--r--. 1 1001 docker    60576 dic  5 13:38 System.Diagnostics.TextWriterTraceListener.dll
+-rwxr--r--. 1 1001 docker    36632 dic  5 13:38 System.Diagnostics.StackTrace.dll
+-rwxr--r--. 1 1001 docker   203936 dic  5 13:38 System.Formats.Asn1.dll
+-rwxr--r--. 1 1001 docker   130224 dic  5 13:38 System.Drawing.Primitives.dll
+-rwxr--r--. 1 1001 docker   271008 dic  5 13:38 System.IO.Compression.dll
+-rwxr--r--. 1 1001 docker    73376 dic  5 13:38 System.IO.Compression.Brotli.dll
+-rwxr--r--. 1 1001 docker    77984 dic  5 13:38 System.IO.FileSystem.DriveInfo.dll
+-rwxr--r--. 1 1001 docker    29872 dic  5 13:38 System.IO.FileSystem.AccessControl.dll
+-rwxr--r--. 1 1001 docker    53408 dic  5 13:38 System.IO.Compression.ZipFile.dll
+-rwxr--r--. 1 1001 docker    82608 dic  5 13:38 System.IO.IsolatedStorage.dll
+-rwxr--r--. 1 1001 docker    97440 dic  5 13:38 System.IO.FileSystem.Watcher.dll
+-rwxr--r--. 1 1001 docker   126128 dic  5 13:38 System.IO.Pipes.dll
+-rwxr--r--. 1 1001 docker    24752 dic  5 13:38 System.IO.Pipes.AccessControl.dll
+-rwxr--r--. 1 1001 docker    75936 dic  5 13:38 System.IO.MemoryMappedFiles.dll
+-rwxr--r--. 1 1001 docker   539808 dic  5 13:38 System.Linq.dll
+-rwxr--r--. 1 1001 docker  3901616 dic  5 13:38 System.Linq.Expressions.dll
+-rwxr--r--. 1 1001 docker   852128 dic  5 13:38 System.Linq.Parallel.dll
+-rwxr--r--. 1 1001 docker   177312 dic  5 13:38 System.Memory.dll
+-rwxr--r--. 1 1001 docker   232096 dic  5 13:38 System.Linq.Queryable.dll
+-rwxr--r--. 1 1001 docker    84656 dic  5 13:38 System.Net.Http.Json.dll
+-rwxr--r--. 1 1001 docker  1774752 dic  5 13:38 System.Net.Http.dll
+-rwxr--r--. 1 1001 docker   495776 dic  5 13:38 System.Net.Mail.dll
+-rwxr--r--. 1 1001 docker   309936 dic  5 13:38 System.Net.HttpListener.dll
+-rwxr--r--. 1 1001 docker   102048 dic  5 13:38 System.Net.Ping.dll
+-rwxr--r--. 1 1001 docker   166576 dic  5 13:38 System.Net.NetworkInformation.dll
+-rwxr--r--. 1 1001 docker    87216 dic  5 13:38 System.Net.NameResolution.dll
+-rwxr--r--. 1 1001 docker   299696 dic  5 13:38 System.Net.Quic.dll
+-rwxr--r--. 1 1001 docker   229024 dic  5 13:38 System.Net.Primitives.dll
+-rwxr--r--. 1 1001 docker   702624 dic  5 13:38 System.Net.Security.dll
+-rwxr--r--. 1 1001 docker   351392 dic  5 13:38 System.Net.Requests.dll
+-rwxr--r--. 1 1001 docker   582816 dic  5 13:38 System.Net.Sockets.dll
+-rwxr--r--. 1 1001 docker    36512 dic  5 13:38 System.Net.ServicePoint.dll
+-rwxr--r--. 1 1001 docker    31920 dic  5 13:38 System.Net.WebProxy.dll
+-rwxr--r--. 1 1001 docker    61104 dic  5 13:38 System.Net.WebHeaderCollection.dll
+-rwxr--r--. 1 1001 docker   168608 dic  5 13:38 System.Net.WebClient.dll
+-rwxr--r--. 1 1001 docker    91296 dic  5 13:38 System.ObjectModel.dll
+-rwxr--r--. 1 1001 docker   187056 dic  5 13:38 System.Net.WebSockets.dll
+-rwxr--r--. 1 1001 docker    76976 dic  5 13:38 System.Net.WebSockets.Client.dll
+-rwxr--r--. 1 1001 docker  2098352 dic  5 13:38 System.Private.DataContractSerialization.dll
+-rwxr--r--. 1 1001 docker   256672 dic  5 13:38 System.Private.Uri.dll
+-rwxr--r--. 1 1001 docker   414880 dic  5 13:38 System.Private.Xml.Linq.dll
+-rwxr--r--. 1 1001 docker  8687264 dic  5 13:38 System.Private.Xml.dll
+-rwxr--r--. 1 1001 docker    66720 dic  5 13:38 System.Reflection.DispatchProxy.dll
+-rwxr--r--. 1 1001 docker    45744 dic  5 13:38 System.Resources.Writer.dll
+-rwxr--r--. 1 1001 docker    33440 dic  5 13:38 System.Reflection.TypeExtensions.dll
+-rwxr--r--. 1 1001 docker  1115296 dic  5 13:38 System.Reflection.Metadata.dll
+-rwxr--r--. 1 1001 docker    52384 dic  5 13:38 System.Runtime.InteropServices.dll
+-rwxr--r--. 1 1001 docker    20128 dic  5 13:38 System.Runtime.CompilerServices.VisualC.dll
+-rwxr--r--. 1 1001 docker    21664 dic  5 13:38 System.Runtime.CompilerServices.Unsafe.dll
+-rwxr--r--. 1 1001 docker   219296 dic  5 13:38 System.Runtime.Numerics.dll
+-rwxr--r--. 1 1001 docker    29856 dic  5 13:38 System.Runtime.InteropServices.RuntimeInformation.dll
+-rwxr--r--. 1 1001 docker    53408 dic  5 13:38 System.Security.AccessControl.dll
+-rwxr--r--. 1 1001 docker    28832 dic  5 13:38 System.Runtime.Serialization.Primitives.dll
+-rwxr--r--. 1 1001 docker   325384 dic  5 13:38 System.Runtime.Serialization.Formatters.dll
+-rwxr--r--. 1 1001 docker   757000 dic  5 13:39 System.Security.Cryptography.Algorithms.dll
+-rwxr--r--. 1 1001 docker    94472 dic  5 13:39 System.Security.Claims.dll
+-rwxr--r--. 1 1001 docker   102048 dic  5 13:39 System.Security.Cryptography.Encoding.dll
+-rwxr--r--. 1 1001 docker   122528 dic  5 13:39 System.Security.Cryptography.Csp.dll
+-rwxr--r--. 1 1001 docker    49328 dic  5 13:39 System.Security.Cryptography.Cng.dll
+-rwxr--r--. 1 1001 docker   137888 dic  5 13:39 System.Security.Cryptography.Primitives.dll
+-rwxr--r--. 1 1001 docker   210696 dic  5 13:39 System.Security.Cryptography.OpenSsl.dll
+-rwxr--r--. 1 1001 docker    36512 dic  5 13:39 System.Security.Principal.Windows.dll
+-rwxr--r--. 1 1001 docker   801048 dic  5 13:39 System.Security.Cryptography.X509Certificates.dll
+-rwxr--r--. 1 1001 docker   130832 dic  5 13:39 System.Text.Encodings.Web.dll
+-rwxr--r--. 1 1001 docker   873752 dic  5 13:39 System.Text.Encoding.CodePages.dll
+-rwxr--r--. 1 1001 docker  1493768 dic  5 13:39 System.Text.Json.dll
+-rwxr--r--. 1 1001 docker    80544 dic  5 13:39 System.Threading.dll
+-rwxr--r--. 1 1001 docker   126112 dic  5 13:39 System.Threading.Channels.dll
+-rwxr--r--. 1 1001 docker   537864 dic  5 13:39 System.Text.RegularExpressions.dll
+-rwxr--r--. 1 1001 docker   139528 dic  5 13:39 System.Threading.Tasks.Parallel.dll
+-rwxr--r--. 1 1001 docker   509088 dic  5 13:39 System.Threading.Tasks.Dataflow.dll
+-rwxr--r--. 1 1001 docker    18712 dic  5 13:39 System.Xml.XPath.XDocument.dll
+-rwxr--r--. 1 1001 docker    53528 dic  5 13:39 System.Web.HttpUtility.dll
+-rwxr--r--. 1 1001 docker   350488 dic  5 13:39 System.Transactions.Local.dll
+-rwxr-xr-x. 1 1001 docker     8748 ene 16 22:54 update.sh.template
+-rw-r--r--. 1 1001 docker     5937 ene 16 22:54 update.cmd.template
+-rw-r--r--. 1 1001 docker     5151 ene 16 22:54 systemd.svc.sh.template
+-rwxr-xr-x. 1 1001 docker      576 ene 16 22:54 runsvc.sh
+-rw-r--r--. 1 1001 docker     4637 ene 16 22:54 RunnerService.js
+-rw-r--r--. 1 1001 docker      431 ene 16 22:54 macos-run-invoker.js
+-rwxr-xr-x. 1 1001 docker     7324 ene 16 22:54 installdependencies.sh
+-rw-r--r--. 1 1001 docker     3535 ene 16 22:54 darwin.svc.sh.template
+-rw-r--r--. 1 1001 docker      242 ene 16 22:54 actions.runner.service.template
+-rw-r--r--. 1 1001 docker      940 ene 16 22:54 actions.runner.plist.template
+-rw-r--r--. 1 1001 docker  1078272 ene 16 22:55 Sdk.dll
+-rw-r--r--. 1 1001 docker    90252 ene 16 22:55 Sdk.deps.json
+-rw-r--r--. 1 1001 docker    53248 ene 16 22:55 Runner.Sdk.dll
+-rw-r--r--. 1 1001 docker    91526 ene 16 22:55 Runner.Sdk.deps.json
+-rw-r--r--. 1 1001 docker   190976 ene 16 22:55 Runner.Common.dll
+-rw-r--r--. 1 1001 docker    92086 ene 16 22:55 Runner.Common.deps.json
+-rw-r--r--. 1 1001 docker   225792 ene 16 22:55 Runner.Listener.dll
+-rwxr-xr-x. 1 1001 docker   142840 ene 16 22:55 Runner.Listener
+-rw-r--r--. 1 1001 docker      332 ene 16 22:55 Runner.Listener.runtimeconfig.json
+-rw-r--r--. 1 1001 docker   157211 ene 16 22:55 Runner.Listener.deps.json
+-rw-r--r--. 1 1001 docker      332 ene 16 22:55 Runner.Worker.runtimeconfig.json
+-rw-r--r--. 1 1001 docker   362496 ene 16 22:55 Runner.Worker.dll
+-rw-r--r--. 1 1001 docker   156540 ene 16 22:55 Runner.Worker.deps.json
+-rwxr-xr-x. 1 1001 docker   142840 ene 16 22:55 Runner.Worker
+-rw-r--r--. 1 1001 docker     6656 ene 16 22:55 Runner.PluginHost.dll
+-rwxr-xr-x. 1 1001 docker   142840 ene 16 22:55 Runner.PluginHost
+-rw-r--r--. 1 1001 docker   111616 ene 16 22:55 Runner.Plugins.dll
+-rw-r--r--. 1 1001 docker    91837 ene 16 22:55 Runner.Plugins.deps.json
+-rw-r--r--. 1 1001 docker      332 ene 16 22:55 Runner.PluginHost.runtimeconfig.json
+-rw-r--r--. 1 1001 docker   155567 ene 16 22:55 Runner.PluginHost.deps.json
+drwxr-xr-x. 2 1001 docker       22 ene 16 22:55 hashFiles
+drwxr-xr-x. 2 1001 docker       54 ene 16 22:55 checkScripts
+[root@localhost bin]# pwd
+/home/git/actions-runner/bin
+[root@localhost bin]# cd ..
+[root@localhost actions-runner]# ls -ltr
+total 184260
+-rwxr-xr-x. 1 1001 docker        65 ene 16 22:54 safe_sleep.sh
+-rwxr-xr-x. 1 1001 docker      2537 ene 16 22:54 run.sh
+-rwxr-xr-x. 1 1001 docker      2522 ene 16 22:54 run-helper.sh.template
+-rw-r--r--. 1 1001 docker      1486 ene 16 22:54 run-helper.cmd.template
+-rwxr-xr-x. 1 1001 docker       646 ene 16 22:54 env.sh
+-rwxr-xr-x. 1 1001 docker      2458 ene 16 22:54 config.sh
+drwxr-xr-x. 6 1001 docker        76 ene 16 22:55 externals
+drwxr-xr-x. 4 1001 docker     12288 ene 16 22:55 bin
+-rw-r--r--. 1 root root   188638107 ene 27 23:50 actions-runner-linux-x64-2.312.0.tar.gz
+[root@localhost actions-runner]# cd exter*
+[root@localhost externals]# ls -ltr
+total 0
+drwxr-xr-x. 6 1001 docker 108 ene 16 22:55 node16
+drwxr-xr-x. 3 1001 docker  32 ene 16 22:55 node16_alpine
+drwxr-xr-x. 3 1001 docker  32 ene 16 22:55 node20_alpine
+drwxr-xr-x. 6 1001 docker 108 ene 16 22:55 node20
+[root@localhost externals]# cd ..
+[root@localhost actions-runner]# ls -ltr
+total 184260
+-rwxr-xr-x. 1 1001 docker        65 ene 16 22:54 safe_sleep.sh
+-rwxr-xr-x. 1 1001 docker      2537 ene 16 22:54 run.sh
+-rwxr-xr-x. 1 1001 docker      2522 ene 16 22:54 run-helper.sh.template
+-rw-r--r--. 1 1001 docker      1486 ene 16 22:54 run-helper.cmd.template
+-rwxr-xr-x. 1 1001 docker       646 ene 16 22:54 env.sh
+-rwxr-xr-x. 1 1001 docker      2458 ene 16 22:54 config.sh
+drwxr-xr-x. 6 1001 docker        76 ene 16 22:55 externals
+drwxr-xr-x. 4 1001 docker     12288 ene 16 22:55 bin
+-rw-r--r--. 1 root root   188638107 ene 27 23:50 actions-runner-linux-x64-2.312.0.tar.gz
+[root@localhost actions-runner]# cd bin
+[root@localhost bin]# rm -R *
+rm: ¿borrar el fichero regular 'actions.runner.plist.template'? (s/n) n
+rm: ¿borrar el fichero regular 'actions.runner.service.template'? (s/n) n
+rm: ¿borrar el fichero regular 'Azure.Core.dll'? (s/n) n
+rm: ¿borrar el fichero regular 'Azure.Storage.Blobs.dll'? (s/n) n
+rm: ¿borrar el fichero regular 'Azure.Storage.Common.dll'? (s/n) n
+rm: ¿descender al directorio 'checkScripts'? (s/n) ^C
+[root@localhost bin]# cd ..
+[root@localhost actions-runner]# ls -ltr
+total 184260
+-rwxr-xr-x. 1 1001 docker        65 ene 16 22:54 safe_sleep.sh
+-rwxr-xr-x. 1 1001 docker      2537 ene 16 22:54 run.sh
+-rwxr-xr-x. 1 1001 docker      2522 ene 16 22:54 run-helper.sh.template
+-rw-r--r--. 1 1001 docker      1486 ene 16 22:54 run-helper.cmd.template
+-rwxr-xr-x. 1 1001 docker       646 ene 16 22:54 env.sh
+-rwxr-xr-x. 1 1001 docker      2458 ene 16 22:54 config.sh
+drwxr-xr-x. 6 1001 docker        76 ene 16 22:55 externals
+drwxr-xr-x. 4 1001 docker     12288 ene 16 22:55 bin
+-rw-r--r--. 1 root root   188638107 ene 27 23:50 actions-runner-linux-x64-2.312.0.tar.gz
+[root@localhost actions-runner]# exit
+cerrar sesión
+[kubernetes@localhost ~]$ ls -ltr
+total 84560
+-rw-r--r--. 1 kubernetes kubernetes 86435564 oct  2 20:25 minikube-linux-amd64
+-rw-r--r--. 1 kubernetes kubernetes      111 oct  2 23:59 01-pod.yaml
+-rw-r--r--. 1 kubernetes kubernetes    24064 oct  3 19:48 docker-img-hello-world.tar
+-rw-r--r--. 1 kubernetes kubernetes       60 oct  9 09:16 a.sh
+-rw-r--r--. 1 kubernetes kubernetes      492 oct  9 20:32 bashrc-org
+-rw-r--r--. 1 kubernetes kubernetes      403 oct 11 12:52 paso_03_02a_test-nequi-app-deployment.yaml
+-rw-r--r--. 1 kubernetes kubernetes      189 oct 27 12:56 nohup.out
+-rw-r--r--. 1 kubernetes kubernetes    21833 oct 28 01:36 man.txt
+-rw-r--r--. 1 kubernetes kubernetes      867 oct 28 09:34 init-sh.txt
+-rw-r--r--. 1 kubernetes kubernetes     2438 oct 28 10:16 bashrc-alias.txt
+drwxr-xr-x. 2 kubernetes kubernetes       39 oct 28 10:28 workshop
+drwxr-xr-x. 2 root       root             25 nov 15 00:15 helm
+-rw-r--r--. 1 kubernetes kubernetes     5984 nov 15 00:42 helm_wordpress_list.txt
+-rw-r--r--. 1 kubernetes kubernetes    48676 nov 15 01:50 config-helm.yaml
+drwxr-xr-x. 2 root       root             32 dic 21 15:14 argo-cd
+-rw-r--r--. 1 kubernetes kubernetes      832 dic 25 23:13 kubectl_ejemplos.txt
+-rw-r--r--. 1 kubernetes kubernetes      396 dic 26 07:48 nginx-depl.yaml
+-rw-r--r--. 1 root       root            216 dic 30 16:23 log-example
+-rw-r--r--. 1 kubernetes kubernetes     1589 ene 24 12:49 subir-docker-kubernetes.txt
+[kubernetes@localhost ~]$ ls -ltr
+total 84560
+-rw-r--r--. 1 kubernetes kubernetes 86435564 oct  2 20:25 minikube-linux-amd64
+-rw-r--r--. 1 kubernetes kubernetes      111 oct  2 23:59 01-pod.yaml
+-rw-r--r--. 1 kubernetes kubernetes    24064 oct  3 19:48 docker-img-hello-world.tar
+-rw-r--r--. 1 kubernetes kubernetes       60 oct  9 09:16 a.sh
+-rw-r--r--. 1 kubernetes kubernetes      492 oct  9 20:32 bashrc-org
+-rw-r--r--. 1 kubernetes kubernetes      403 oct 11 12:52 paso_03_02a_test-nequi-app-deployment.yaml
+-rw-r--r--. 1 kubernetes kubernetes      189 oct 27 12:56 nohup.out
+-rw-r--r--. 1 kubernetes kubernetes    21833 oct 28 01:36 man.txt
+-rw-r--r--. 1 kubernetes kubernetes      867 oct 28 09:34 init-sh.txt
+-rw-r--r--. 1 kubernetes kubernetes     2438 oct 28 10:16 bashrc-alias.txt
+drwxr-xr-x. 2 kubernetes kubernetes       39 oct 28 10:28 workshop
+drwxr-xr-x. 2 root       root             25 nov 15 00:15 helm
+-rw-r--r--. 1 kubernetes kubernetes     5984 nov 15 00:42 helm_wordpress_list.txt
+-rw-r--r--. 1 kubernetes kubernetes    48676 nov 15 01:50 config-helm.yaml
+drwxr-xr-x. 2 root       root             32 dic 21 15:14 argo-cd
+-rw-r--r--. 1 kubernetes kubernetes      832 dic 25 23:13 kubectl_ejemplos.txt
+-rw-r--r--. 1 kubernetes kubernetes      396 dic 26 07:48 nginx-depl.yaml
+-rw-r--r--. 1 root       root            216 dic 30 16:23 log-example
+-rw-r--r--. 1 kubernetes kubernetes     1589 ene 24 12:49 subir-docker-kubernetes.txt
+[kubernetes@localhost ~]$ pwd
+/home/kubernetes
+[kubernetes@localhost ~]$ ls -ltr
+total 84560
+-rw-r--r--. 1 kubernetes kubernetes 86435564 oct  2 20:25 minikube-linux-amd64
+-rw-r--r--. 1 kubernetes kubernetes      111 oct  2 23:59 01-pod.yaml
+-rw-r--r--. 1 kubernetes kubernetes    24064 oct  3 19:48 docker-img-hello-world.tar
+-rw-r--r--. 1 kubernetes kubernetes       60 oct  9 09:16 a.sh
+-rw-r--r--. 1 kubernetes kubernetes      492 oct  9 20:32 bashrc-org
+-rw-r--r--. 1 kubernetes kubernetes      403 oct 11 12:52 paso_03_02a_test-nequi-app-deployment.yaml
+-rw-r--r--. 1 kubernetes kubernetes      189 oct 27 12:56 nohup.out
+-rw-r--r--. 1 kubernetes kubernetes    21833 oct 28 01:36 man.txt
+-rw-r--r--. 1 kubernetes kubernetes      867 oct 28 09:34 init-sh.txt
+-rw-r--r--. 1 kubernetes kubernetes     2438 oct 28 10:16 bashrc-alias.txt
+drwxr-xr-x. 2 kubernetes kubernetes       39 oct 28 10:28 workshop
+drwxr-xr-x. 2 root       root             25 nov 15 00:15 helm
+-rw-r--r--. 1 kubernetes kubernetes     5984 nov 15 00:42 helm_wordpress_list.txt
+-rw-r--r--. 1 kubernetes kubernetes    48676 nov 15 01:50 config-helm.yaml
+drwxr-xr-x. 2 root       root             32 dic 21 15:14 argo-cd
+-rw-r--r--. 1 kubernetes kubernetes      832 dic 25 23:13 kubectl_ejemplos.txt
+-rw-r--r--. 1 kubernetes kubernetes      396 dic 26 07:48 nginx-depl.yaml
+-rw-r--r--. 1 root       root            216 dic 30 16:23 log-example
+-rw-r--r--. 1 kubernetes kubernetes     1589 ene 24 12:49 subir-docker-kubernetes.txt
+[kubernetes@localhost ~]$ cd ../git
+[kubernetes@localhost git]$ ls -ltr
+total 4
+drwxr-xr-x. 4 root root     33 dic 21 14:56 argo-cd
+drwxr-xr-x. 4 1001 docker 4096 ene 16 22:55 actions-runner
+[kubernetes@localhost git]$ sudo su
+[root@localhost git]# pwd
+/home/git
+[root@localhost git]# ls -ltr
+total 4
+drwxr-xr-x. 4 root root     33 dic 21 14:56 argo-cd
+drwxr-xr-x. 4 1001 docker 4096 ene 16 22:55 actions-runner
+[root@localhost git]# chown kubernetes:kubernetes actions-runner
+[root@localhost git]# ls -ltr
+total 4
+drwxr-xr-x. 4 root       root         33 dic 21 14:56 argo-cd
+drwxr-xr-x. 4 kubernetes kubernetes 4096 ene 16 22:55 actions-runner
+[root@localhost git]# cd actions-runner
+[root@localhost actions-runner]# ls -ltr
+total 184260
+-rwxr-xr-x. 1 1001 docker        65 ene 16 22:54 safe_sleep.sh
+-rwxr-xr-x. 1 1001 docker      2537 ene 16 22:54 run.sh
+-rwxr-xr-x. 1 1001 docker      2522 ene 16 22:54 run-helper.sh.template
+-rw-r--r--. 1 1001 docker      1486 ene 16 22:54 run-helper.cmd.template
+-rwxr-xr-x. 1 1001 docker       646 ene 16 22:54 env.sh
+-rwxr-xr-x. 1 1001 docker      2458 ene 16 22:54 config.sh
+drwxr-xr-x. 6 1001 docker        76 ene 16 22:55 externals
+drwxr-xr-x. 4 1001 docker     12288 ene 16 22:55 bin
+-rw-r--r--. 1 root root   188638107 ene 27 23:50 actions-runner-linux-x64-2.312.0.tar.gz
+[root@localhost actions-runner]# chown -R kubernetes:kubernetes *                            <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+[root@localhost actions-runner]# ls -ltr
+total 184260
+-rwxr-xr-x. 1 kubernetes kubernetes        65 ene 16 22:54 safe_sleep.sh
+-rwxr-xr-x. 1 kubernetes kubernetes      2537 ene 16 22:54 run.sh
+-rwxr-xr-x. 1 kubernetes kubernetes      2522 ene 16 22:54 run-helper.sh.template
+-rw-r--r--. 1 kubernetes kubernetes      1486 ene 16 22:54 run-helper.cmd.template
+-rwxr-xr-x. 1 kubernetes kubernetes       646 ene 16 22:54 env.sh
+-rwxr-xr-x. 1 kubernetes kubernetes      2458 ene 16 22:54 config.sh
+drwxr-xr-x. 6 kubernetes kubernetes        76 ene 16 22:55 externals
+drwxr-xr-x. 4 kubernetes kubernetes     12288 ene 16 22:55 bin
+-rw-r--r--. 1 kubernetes kubernetes 188638107 ene 27 23:50 actions-runner-linux-x64-2.312.0.tar.gz
+[root@localhost actions-runner]# cd bin
+[root@localhost bin]# ls -ltr
+total 77596
+-rwxr--r--. 1 kubernetes kubernetes    18432 jun  5  2016 Minimatch.dll
+-rwxr--r--. 1 kubernetes kubernetes    90624 mar 22  2017 Newtonsoft.Json.Bson.dll
+-rwxr--r--. 1 kubernetes kubernetes    24880 jul 19  2017 System.Security.Cryptography.ProtectedData.dll
+-rwxr--r--. 1 kubernetes kubernetes    27944 jul 19  2017 System.ServiceProcess.ServiceController.dll
+-rwxr--r--. 1 kubernetes kubernetes    35080 jul 19  2017 System.Security.Cryptography.Pkcs.dll
+-rwxr--r--. 1 kubernetes kubernetes    30832 feb  8  2018 Microsoft.IdentityModel.Logging.dll
+-rwxr--r--. 1 kubernetes kubernetes   138352 feb  8  2018 Microsoft.IdentityModel.Tokens.dll
+-rwxr--r--. 1 kubernetes kubernetes    90736 feb  8  2018 System.IdentityModel.Tokens.Jwt.dll
+-rwxr--r--. 1 kubernetes kubernetes   184320 dic  5  2018 YamlDotNet.dll
+-rwxr--r--. 1 kubernetes kubernetes    14720 abr 14  2020 Microsoft.Bcl.AsyncInterfaces.dll
+-rwxr--r--. 1 kubernetes kubernetes    21368 abr  8  2021 System.Memory.Data.dll
+-rwxr--r--. 1 kubernetes kubernetes    29296 oct 22  2021 System.IO.Hashing.dll
+-rwxr--r--. 1 kubernetes kubernetes   179672 may 27  2022 System.Net.Http.Formatting.dll
+-rwxr--r--. 1 kubernetes kubernetes   712464 mar  8  2023 Newtonsoft.Json.dll
+-rwxr--r--. 1 kubernetes kubernetes   392736 nov 10 14:42 Azure.Core.dll
+-rwxr--r--. 1 kubernetes kubernetes   243632 nov 13 15:43 Azure.Storage.Common.dll
+-rwxr--r--. 1 kubernetes kubernetes  1308080 nov 13 15:44 Azure.Storage.Blobs.dll
+-rwxr--r--. 1 kubernetes kubernetes   747936 dic  5 13:08 libcoreclrtraceptprovider.so
+-rwxr--r--. 1 kubernetes kubernetes   738056 dic  5 13:13 libdbgshim.so
+-rwxr--r--. 1 kubernetes kubernetes  2602272 dic  5 13:15 libmscordaccore.so
+-rwxr--r--. 1 kubernetes kubernetes  1778936 dic  5 13:15 libmscordbi.so
+-rwxr--r--. 1 kubernetes kubernetes  7360032 dic  5 13:15 libcoreclr.so
+-rwxr--r--. 1 kubernetes kubernetes   145856 dic  5 13:15 createdump
+-rwxr--r--. 1 kubernetes kubernetes  3359640 dic  5 13:16 libclrjit.so
+-rwxr--r--. 1 kubernetes kubernetes    17160 dic  5 13:17 WindowsBase.dll
+-rwxr--r--. 1 kubernetes kubernetes    16144 dic  5 13:17 System.Xml.XPath.dll
+-rwxr--r--. 1 kubernetes kubernetes    18184 dic  5 13:17 System.Xml.XmlSerializer.dll
+-rwxr--r--. 1 kubernetes kubernetes    16136 dic  5 13:17 System.Xml.XmlDocument.dll
+-rwxr--r--. 1 kubernetes kubernetes    16136 dic  5 13:17 System.Xml.XDocument.dll
+-rwxr--r--. 1 kubernetes kubernetes    16648 dic  5 13:17 System.Xml.Serialization.dll
+-rwxr--r--. 1 kubernetes kubernetes    22176 dic  5 13:17 System.Xml.ReaderWriter.dll
+-rwxr--r--. 1 kubernetes kubernetes    16648 dic  5 13:17 System.Xml.Linq.dll
+-rwxr--r--. 1 kubernetes kubernetes    24840 dic  5 13:17 System.Xml.dll
+-rwxr--r--. 1 kubernetes kubernetes    16664 dic  5 13:17 System.Windows.dll
+-rwxr--r--. 1 kubernetes kubernetes    16136 dic  5 13:17 System.Web.dll
+-rwxr--r--. 1 kubernetes kubernetes    15624 dic  5 13:17 System.ValueTuple.dll
+-rwxr--r--. 1 kubernetes kubernetes    17160 dic  5 13:17 System.Transactions.dll
+-rwxr--r--. 1 kubernetes kubernetes    15520 dic  5 13:17 System.Threading.Timer.dll
+-rwxr--r--. 1 kubernetes kubernetes    16152 dic  5 13:17 System.Threading.ThreadPool.dll
+-rwxr--r--. 1 kubernetes kubernetes    16032 dic  5 13:17 System.Threading.Thread.dll
+-rwxr--r--. 1 kubernetes kubernetes    16032 dic  5 13:17 System.Threading.Tasks.Extensions.dll
+-rwxr--r--. 1 kubernetes kubernetes    17056 dic  5 13:17 System.Threading.Tasks.dll
+-rwxr--r--. 1 kubernetes kubernetes    16032 dic  5 13:17 System.Threading.Overlapped.dll
+-rwxr--r--. 1 kubernetes kubernetes    16032 dic  5 13:17 System.Text.Encoding.Extensions.dll
+-rwxr--r--. 1 kubernetes kubernetes    16032 dic  5 13:17 System.Text.Encoding.dll
+-rwxr--r--. 1 kubernetes kubernetes    16664 dic  5 13:17 System.ServiceProcess.dll
+-rwxr--r--. 1 kubernetes kubernetes    17568 dic  5 13:17 System.ServiceModel.Web.dll
+-rwxr--r--. 1 kubernetes kubernetes    15624 dic  5 13:17 System.Security.SecureString.dll
+-rwxr--r--. 1 kubernetes kubernetes    15640 dic  5 13:17 System.Security.Principal.dll
+-rwxr--r--. 1 kubernetes kubernetes    18592 dic  5 13:17 System.Security.dll
+-rwxr--r--. 1 kubernetes kubernetes    16544 dic  5 13:17 System.Runtime.Serialization.Xml.dll
+-rwxr--r--. 1 kubernetes kubernetes    16152 dic  5 13:17 System.Runtime.Serialization.Json.dll
+-rwxr--r--. 1 kubernetes kubernetes    17584 dic  5 13:17 System.Runtime.Serialization.dll
+-rwxr--r--. 1 kubernetes kubernetes    16048 dic  5 13:17 System.Runtime.Loader.dll
+-rwxr--r--. 1 kubernetes kubernetes    16544 dic  5 13:17 System.Runtime.Intrinsics.dll
+-rwxr--r--. 1 kubernetes kubernetes    15520 dic  5 13:17 System.Runtime.Handles.dll
+-rwxr--r--. 1 kubernetes kubernetes    18192 dic  5 13:17 System.Runtime.Extensions.dll
+-rwxr--r--. 1 kubernetes kubernetes    42768 dic  5 13:17 System.Runtime.dll
+-rwxr--r--. 1 kubernetes kubernetes    16032 dic  5 13:17 System.Resources.ResourceManager.dll
+-rwxr--r--. 1 kubernetes kubernetes    15640 dic  5 13:17 System.Resources.Reader.dll
+-rwxr--r--. 1 kubernetes kubernetes    16032 dic  5 13:17 System.Reflection.Primitives.dll
+-rwxr--r--. 1 kubernetes kubernetes    15624 dic  5 13:17 System.Reflection.Extensions.dll
+-rwxr--r--. 1 kubernetes kubernetes    16144 dic  5 13:17 System.Reflection.Emit.Lightweight.dll
+-rwxr--r--. 1 kubernetes kubernetes    16032 dic  5 13:17 System.Reflection.Emit.ILGeneration.dll
+-rwxr--r--. 1 kubernetes kubernetes    16048 dic  5 13:17 System.Reflection.Emit.dll
+-rwxr--r--. 1 kubernetes kubernetes    16544 dic  5 13:17 System.Reflection.dll
+-rwxr--r--. 1 kubernetes kubernetes    16032 dic  5 13:17 System.Numerics.Vectors.dll
+-rwxr--r--. 1 kubernetes kubernetes    16136 dic  5 13:17 System.Numerics.dll
+-rwxr--r--. 1 kubernetes kubernetes    18184 dic  5 13:17 System.Net.dll
+-rwxr--r--. 1 kubernetes kubernetes    15520 dic  5 13:17 System.IO.UnmanagedMemoryStream.dll
+-rwxr--r--. 1 kubernetes kubernetes    15624 dic  5 13:17 System.IO.FileSystem.Primitives.dll
+-rwxr--r--. 1 kubernetes kubernetes    24240 dic  5 13:17 System.IO.FileSystem.dll
+-rwxr--r--. 1 kubernetes kubernetes    16048 dic  5 13:17 System.IO.dll
+-rwxr--r--. 1 kubernetes kubernetes    16152 dic  5 13:17 System.IO.Compression.FileSystem.dll
+-rwxr--r--. 1 kubernetes kubernetes    15536 dic  5 13:17 System.Globalization.Extensions.dll
+-rwxr--r--. 1 kubernetes kubernetes    16152 dic  5 13:17 System.Globalization.dll
+-rwxr--r--. 1 kubernetes kubernetes    16152 dic  5 13:17 System.Globalization.Calendars.dll
+-rwxr--r--. 1 kubernetes kubernetes    16656 dic  5 13:17 System.Dynamic.Runtime.dll
+-rwxr--r--. 1 kubernetes kubernetes    21152 dic  5 13:17 System.Drawing.dll
+-rwxr--r--. 1 kubernetes kubernetes    50848 dic  5 13:17 System.dll
+-rwxr--r--. 1 kubernetes kubernetes    16544 dic  5 13:17 System.Diagnostics.Tracing.dll
+-rwxr--r--. 1 kubernetes kubernetes    16048 dic  5 13:17 System.Diagnostics.Tools.dll
+-rwxr--r--. 1 kubernetes kubernetes    16048 dic  5 13:17 System.Diagnostics.Debug.dll
+-rwxr--r--. 1 kubernetes kubernetes    16032 dic  5 13:17 System.Diagnostics.Contracts.dll
+-rwxr--r--. 1 kubernetes kubernetes    25760 dic  5 13:17 System.Data.dll
+-rwxr--r--. 1 kubernetes kubernetes    16032 dic  5 13:17 System.Data.DataSetExtensions.dll
+-rwxr--r--. 1 kubernetes kubernetes    24224 dic  5 13:17 System.Core.dll
+-rwxr--r--. 1 kubernetes kubernetes    19720 dic  5 13:17 System.Configuration.dll
+-rwxr--r--. 1 kubernetes kubernetes    17568 dic  5 13:17 System.ComponentModel.DataAnnotations.dll
+-rwxr--r--. 1 kubernetes kubernetes    15520 dic  5 13:17 System.Buffers.dll
+-rwxr--r--. 1 kubernetes kubernetes    15520 dic  5 13:17 System.AppContext.dll
+-rwxr--r--. 1 kubernetes kubernetes   101640 dic  5 13:17 netstandard.dll
+-rwxr--r--. 1 kubernetes kubernetes    58544 dic  5 13:17 mscorlib.dll
+-rwxr--r--. 1 kubernetes kubernetes    18184 dic  5 13:17 Microsoft.VisualBasic.dll
+-rwxr--r--. 1 kubernetes kubernetes   137360 dic  5 13:17 libSystem.Security.Cryptography.Native.OpenSsl.so
+-rwxr--r--. 1 kubernetes kubernetes    14472 dic  5 13:17 libSystem.Net.Security.Native.so
+-rwxr--r--. 1 kubernetes kubernetes    92272 dic  5 13:17 libSystem.Native.so
+-rwxr--r--. 1 kubernetes kubernetes   940184 dic  5 13:17 libSystem.IO.Compression.Native.so
+-rwxr--r--. 1 kubernetes kubernetes    72104 dic  5 13:17 libSystem.Globalization.Native.so
+-rwxr--r--. 1 kubernetes kubernetes 10424480 dic  5 13:23 System.Private.CoreLib.dll
+-rwxr--r--. 1 kubernetes kubernetes   383328 dic  5 13:34 libhostpolicy.so
+-rwxr--r--. 1 kubernetes kubernetes   424280 dic  5 13:34 libhostfxr.so
+-rwxr--r--. 1 kubernetes kubernetes  1232560 dic  5 13:37 Microsoft.VisualBasic.Core.dll
+-rwxr--r--. 1 kubernetes kubernetes   841888 dic  5 13:37 Microsoft.CSharp.dll
+-rwxr--r--. 1 kubernetes kubernetes   238752 dic  5 13:37 System.Collections.Concurrent.dll
+-rwxr--r--. 1 kubernetes kubernetes    59040 dic  5 13:37 Microsoft.Win32.Registry.dll
+-rwxr--r--. 1 kubernetes kubernetes    24736 dic  5 13:37 Microsoft.Win32.Primitives.dll
+-rwxr--r--. 1 kubernetes kubernetes   600240 dic  5 13:37 System.Collections.Immutable.dll
+-rwxr--r--. 1 kubernetes kubernetes   268960 dic  5 13:37 System.Collections.dll
+-rwxr--r--. 1 kubernetes kubernetes    95904 dic  5 13:37 System.Collections.Specialized.dll
+-rwxr--r--. 1 kubernetes kubernetes   101040 dic  5 13:37 System.Collections.NonGeneric.dll
+-rwxr--r--. 1 kubernetes kubernetes    38560 dic  5 13:37 System.ComponentModel.EventBasedAsync.dll
+-rwxr--r--. 1 kubernetes kubernetes    18592 dic  5 13:37 System.ComponentModel.dll
+-rwxr--r--. 1 kubernetes kubernetes   187568 dic  5 13:37 System.ComponentModel.Annotations.dll
+-rwxr--r--. 1 kubernetes kubernetes   751776 dic  5 13:37 System.ComponentModel.TypeConverter.dll
+-rwxr--r--. 1 kubernetes kubernetes    75952 dic  5 13:37 System.ComponentModel.Primitives.dll
+-rwxr--r--. 1 kubernetes kubernetes   190624 dic  5 13:38 System.Console.dll
+-rwxr--r--. 1 kubernetes kubernetes   384688 dic  5 13:38 System.Diagnostics.DiagnosticSource.dll
+-rwxr--r--. 1 kubernetes kubernetes  3016864 dic  5 13:38 System.Data.Common.dll
+-rwxr--r--. 1 kubernetes kubernetes   264864 dic  5 13:38 System.Diagnostics.Process.dll
+-rwxr--r--. 1 kubernetes kubernetes    41632 dic  5 13:38 System.Diagnostics.FileVersionInfo.dll
+-rwxr--r--. 1 kubernetes kubernetes   133280 dic  5 13:38 System.Diagnostics.TraceSource.dll
+-rwxr--r--. 1 kubernetes kubernetes    60576 dic  5 13:38 System.Diagnostics.TextWriterTraceListener.dll
+-rwxr--r--. 1 kubernetes kubernetes    36632 dic  5 13:38 System.Diagnostics.StackTrace.dll
+-rwxr--r--. 1 kubernetes kubernetes   203936 dic  5 13:38 System.Formats.Asn1.dll
+-rwxr--r--. 1 kubernetes kubernetes   130224 dic  5 13:38 System.Drawing.Primitives.dll
+-rwxr--r--. 1 kubernetes kubernetes   271008 dic  5 13:38 System.IO.Compression.dll
+-rwxr--r--. 1 kubernetes kubernetes    73376 dic  5 13:38 System.IO.Compression.Brotli.dll
+-rwxr--r--. 1 kubernetes kubernetes    77984 dic  5 13:38 System.IO.FileSystem.DriveInfo.dll
+-rwxr--r--. 1 kubernetes kubernetes    29872 dic  5 13:38 System.IO.FileSystem.AccessControl.dll
+-rwxr--r--. 1 kubernetes kubernetes    53408 dic  5 13:38 System.IO.Compression.ZipFile.dll
+-rwxr--r--. 1 kubernetes kubernetes    82608 dic  5 13:38 System.IO.IsolatedStorage.dll
+-rwxr--r--. 1 kubernetes kubernetes    97440 dic  5 13:38 System.IO.FileSystem.Watcher.dll
+-rwxr--r--. 1 kubernetes kubernetes   126128 dic  5 13:38 System.IO.Pipes.dll
+-rwxr--r--. 1 kubernetes kubernetes    24752 dic  5 13:38 System.IO.Pipes.AccessControl.dll
+-rwxr--r--. 1 kubernetes kubernetes    75936 dic  5 13:38 System.IO.MemoryMappedFiles.dll
+-rwxr--r--. 1 kubernetes kubernetes   539808 dic  5 13:38 System.Linq.dll
+-rwxr--r--. 1 kubernetes kubernetes  3901616 dic  5 13:38 System.Linq.Expressions.dll
+-rwxr--r--. 1 kubernetes kubernetes   852128 dic  5 13:38 System.Linq.Parallel.dll
+-rwxr--r--. 1 kubernetes kubernetes   177312 dic  5 13:38 System.Memory.dll
+-rwxr--r--. 1 kubernetes kubernetes   232096 dic  5 13:38 System.Linq.Queryable.dll
+-rwxr--r--. 1 kubernetes kubernetes    84656 dic  5 13:38 System.Net.Http.Json.dll
+-rwxr--r--. 1 kubernetes kubernetes  1774752 dic  5 13:38 System.Net.Http.dll
+-rwxr--r--. 1 kubernetes kubernetes   495776 dic  5 13:38 System.Net.Mail.dll
+-rwxr--r--. 1 kubernetes kubernetes   309936 dic  5 13:38 System.Net.HttpListener.dll
+-rwxr--r--. 1 kubernetes kubernetes   102048 dic  5 13:38 System.Net.Ping.dll
+-rwxr--r--. 1 kubernetes kubernetes   166576 dic  5 13:38 System.Net.NetworkInformation.dll
+-rwxr--r--. 1 kubernetes kubernetes    87216 dic  5 13:38 System.Net.NameResolution.dll
+-rwxr--r--. 1 kubernetes kubernetes   299696 dic  5 13:38 System.Net.Quic.dll
+-rwxr--r--. 1 kubernetes kubernetes   229024 dic  5 13:38 System.Net.Primitives.dll
+-rwxr--r--. 1 kubernetes kubernetes   702624 dic  5 13:38 System.Net.Security.dll
+-rwxr--r--. 1 kubernetes kubernetes   351392 dic  5 13:38 System.Net.Requests.dll
+-rwxr--r--. 1 kubernetes kubernetes   582816 dic  5 13:38 System.Net.Sockets.dll
+-rwxr--r--. 1 kubernetes kubernetes    36512 dic  5 13:38 System.Net.ServicePoint.dll
+-rwxr--r--. 1 kubernetes kubernetes    31920 dic  5 13:38 System.Net.WebProxy.dll
+-rwxr--r--. 1 kubernetes kubernetes    61104 dic  5 13:38 System.Net.WebHeaderCollection.dll
+-rwxr--r--. 1 kubernetes kubernetes   168608 dic  5 13:38 System.Net.WebClient.dll
+-rwxr--r--. 1 kubernetes kubernetes    91296 dic  5 13:38 System.ObjectModel.dll
+-rwxr--r--. 1 kubernetes kubernetes   187056 dic  5 13:38 System.Net.WebSockets.dll
+-rwxr--r--. 1 kubernetes kubernetes    76976 dic  5 13:38 System.Net.WebSockets.Client.dll
+-rwxr--r--. 1 kubernetes kubernetes  2098352 dic  5 13:38 System.Private.DataContractSerialization.dll
+-rwxr--r--. 1 kubernetes kubernetes   256672 dic  5 13:38 System.Private.Uri.dll
+-rwxr--r--. 1 kubernetes kubernetes   414880 dic  5 13:38 System.Private.Xml.Linq.dll
+-rwxr--r--. 1 kubernetes kubernetes  8687264 dic  5 13:38 System.Private.Xml.dll
+-rwxr--r--. 1 kubernetes kubernetes    66720 dic  5 13:38 System.Reflection.DispatchProxy.dll
+-rwxr--r--. 1 kubernetes kubernetes    45744 dic  5 13:38 System.Resources.Writer.dll
+-rwxr--r--. 1 kubernetes kubernetes    33440 dic  5 13:38 System.Reflection.TypeExtensions.dll
+-rwxr--r--. 1 kubernetes kubernetes  1115296 dic  5 13:38 System.Reflection.Metadata.dll
+-rwxr--r--. 1 kubernetes kubernetes    52384 dic  5 13:38 System.Runtime.InteropServices.dll
+-rwxr--r--. 1 kubernetes kubernetes    20128 dic  5 13:38 System.Runtime.CompilerServices.VisualC.dll
+-rwxr--r--. 1 kubernetes kubernetes    21664 dic  5 13:38 System.Runtime.CompilerServices.Unsafe.dll
+-rwxr--r--. 1 kubernetes kubernetes   219296 dic  5 13:38 System.Runtime.Numerics.dll
+-rwxr--r--. 1 kubernetes kubernetes    29856 dic  5 13:38 System.Runtime.InteropServices.RuntimeInformation.dll
+-rwxr--r--. 1 kubernetes kubernetes    53408 dic  5 13:38 System.Security.AccessControl.dll
+-rwxr--r--. 1 kubernetes kubernetes    28832 dic  5 13:38 System.Runtime.Serialization.Primitives.dll
+-rwxr--r--. 1 kubernetes kubernetes   325384 dic  5 13:38 System.Runtime.Serialization.Formatters.dll
+-rwxr--r--. 1 kubernetes kubernetes   757000 dic  5 13:39 System.Security.Cryptography.Algorithms.dll
+-rwxr--r--. 1 kubernetes kubernetes    94472 dic  5 13:39 System.Security.Claims.dll
+-rwxr--r--. 1 kubernetes kubernetes   102048 dic  5 13:39 System.Security.Cryptography.Encoding.dll
+-rwxr--r--. 1 kubernetes kubernetes   122528 dic  5 13:39 System.Security.Cryptography.Csp.dll
+-rwxr--r--. 1 kubernetes kubernetes    49328 dic  5 13:39 System.Security.Cryptography.Cng.dll
+-rwxr--r--. 1 kubernetes kubernetes   137888 dic  5 13:39 System.Security.Cryptography.Primitives.dll
+-rwxr--r--. 1 kubernetes kubernetes   210696 dic  5 13:39 System.Security.Cryptography.OpenSsl.dll
+-rwxr--r--. 1 kubernetes kubernetes    36512 dic  5 13:39 System.Security.Principal.Windows.dll
+-rwxr--r--. 1 kubernetes kubernetes   801048 dic  5 13:39 System.Security.Cryptography.X509Certificates.dll
+-rwxr--r--. 1 kubernetes kubernetes   130832 dic  5 13:39 System.Text.Encodings.Web.dll
+-rwxr--r--. 1 kubernetes kubernetes   873752 dic  5 13:39 System.Text.Encoding.CodePages.dll
+-rwxr--r--. 1 kubernetes kubernetes  1493768 dic  5 13:39 System.Text.Json.dll
+-rwxr--r--. 1 kubernetes kubernetes    80544 dic  5 13:39 System.Threading.dll
+-rwxr--r--. 1 kubernetes kubernetes   126112 dic  5 13:39 System.Threading.Channels.dll
+-rwxr--r--. 1 kubernetes kubernetes   537864 dic  5 13:39 System.Text.RegularExpressions.dll
+-rwxr--r--. 1 kubernetes kubernetes   139528 dic  5 13:39 System.Threading.Tasks.Parallel.dll
+-rwxr--r--. 1 kubernetes kubernetes   509088 dic  5 13:39 System.Threading.Tasks.Dataflow.dll
+-rwxr--r--. 1 kubernetes kubernetes    18712 dic  5 13:39 System.Xml.XPath.XDocument.dll
+-rwxr--r--. 1 kubernetes kubernetes    53528 dic  5 13:39 System.Web.HttpUtility.dll
+-rwxr--r--. 1 kubernetes kubernetes   350488 dic  5 13:39 System.Transactions.Local.dll
+-rwxr-xr-x. 1 kubernetes kubernetes     8748 ene 16 22:54 update.sh.template
+-rw-r--r--. 1 kubernetes kubernetes     5937 ene 16 22:54 update.cmd.template
+-rw-r--r--. 1 kubernetes kubernetes     5151 ene 16 22:54 systemd.svc.sh.template
+-rwxr-xr-x. 1 kubernetes kubernetes      576 ene 16 22:54 runsvc.sh
+-rw-r--r--. 1 kubernetes kubernetes     4637 ene 16 22:54 RunnerService.js
+-rw-r--r--. 1 kubernetes kubernetes      431 ene 16 22:54 macos-run-invoker.js
+-rwxr-xr-x. 1 kubernetes kubernetes     7324 ene 16 22:54 installdependencies.sh
+-rw-r--r--. 1 kubernetes kubernetes     3535 ene 16 22:54 darwin.svc.sh.template
+-rw-r--r--. 1 kubernetes kubernetes      242 ene 16 22:54 actions.runner.service.template
+-rw-r--r--. 1 kubernetes kubernetes      940 ene 16 22:54 actions.runner.plist.template
+-rw-r--r--. 1 kubernetes kubernetes  1078272 ene 16 22:55 Sdk.dll
+-rw-r--r--. 1 kubernetes kubernetes    90252 ene 16 22:55 Sdk.deps.json
+-rw-r--r--. 1 kubernetes kubernetes    53248 ene 16 22:55 Runner.Sdk.dll
+-rw-r--r--. 1 kubernetes kubernetes    91526 ene 16 22:55 Runner.Sdk.deps.json
+-rw-r--r--. 1 kubernetes kubernetes   190976 ene 16 22:55 Runner.Common.dll
+-rw-r--r--. 1 kubernetes kubernetes    92086 ene 16 22:55 Runner.Common.deps.json
+-rw-r--r--. 1 kubernetes kubernetes   225792 ene 16 22:55 Runner.Listener.dll
+-rwxr-xr-x. 1 kubernetes kubernetes   142840 ene 16 22:55 Runner.Listener
+-rw-r--r--. 1 kubernetes kubernetes      332 ene 16 22:55 Runner.Listener.runtimeconfig.json
+-rw-r--r--. 1 kubernetes kubernetes   157211 ene 16 22:55 Runner.Listener.deps.json
+-rw-r--r--. 1 kubernetes kubernetes      332 ene 16 22:55 Runner.Worker.runtimeconfig.json
+-rw-r--r--. 1 kubernetes kubernetes   362496 ene 16 22:55 Runner.Worker.dll
+-rw-r--r--. 1 kubernetes kubernetes   156540 ene 16 22:55 Runner.Worker.deps.json
+-rwxr-xr-x. 1 kubernetes kubernetes   142840 ene 16 22:55 Runner.Worker
+-rw-r--r--. 1 kubernetes kubernetes     6656 ene 16 22:55 Runner.PluginHost.dll
+-rwxr-xr-x. 1 kubernetes kubernetes   142840 ene 16 22:55 Runner.PluginHost
+-rw-r--r--. 1 kubernetes kubernetes   111616 ene 16 22:55 Runner.Plugins.dll
+-rw-r--r--. 1 kubernetes kubernetes    91837 ene 16 22:55 Runner.Plugins.deps.json
+-rw-r--r--. 1 kubernetes kubernetes      332 ene 16 22:55 Runner.PluginHost.runtimeconfig.json
+-rw-r--r--. 1 kubernetes kubernetes   155567 ene 16 22:55 Runner.PluginHost.deps.json
+drwxr-xr-x. 2 kubernetes kubernetes       22 ene 16 22:55 hashFiles
+drwxr-xr-x. 2 kubernetes kubernetes       54 ene 16 22:55 checkScripts
+[root@localhost bin]# cd ..
+[root@localhost actions-runner]# ls -ltr
+total 184260
+-rwxr-xr-x. 1 kubernetes kubernetes        65 ene 16 22:54 safe_sleep.sh
+-rwxr-xr-x. 1 kubernetes kubernetes      2537 ene 16 22:54 run.sh
+-rwxr-xr-x. 1 kubernetes kubernetes      2522 ene 16 22:54 run-helper.sh.template
+-rw-r--r--. 1 kubernetes kubernetes      1486 ene 16 22:54 run-helper.cmd.template
+-rwxr-xr-x. 1 kubernetes kubernetes       646 ene 16 22:54 env.sh
+-rwxr-xr-x. 1 kubernetes kubernetes      2458 ene 16 22:54 config.sh
+drwxr-xr-x. 6 kubernetes kubernetes        76 ene 16 22:55 externals
+drwxr-xr-x. 4 kubernetes kubernetes     12288 ene 16 22:55 bin
+-rw-r--r--. 1 kubernetes kubernetes 188638107 ene 27 23:50 actions-runner-linux-x64-2.312.0.tar.gz
+[root@localhost actions-runner]# exit
+exit
+[kubernetes@localhost git]$ pwd
+/home/git
+[kubernetes@localhost git]$ ls -ltr
+total 4
+drwxr-xr-x. 4 root       root         33 dic 21 14:56 argo-cd
+drwxr-xr-x. 4 kubernetes kubernetes 4096 ene 16 22:55 actions-runner
+[kubernetes@localhost git]$ pwd
+/home/git
+[kubernetes@localhost git]$ id
+uid=1000(kubernetes) gid=1000(kubernetes) grupos=1000(kubernetes),10(wheel),988(docker) contexto=unconfined_u:unconfined_r:unconfined_t:s0-s0:c0.c1023
+[kubernetes@localhost git]$ cd actions-runner
+[kubernetes@localhost actions-runner]$ ls -ltr
+total 184260
+-rwxr-xr-x. 1 kubernetes kubernetes        65 ene 16 22:54 safe_sleep.sh
+-rwxr-xr-x. 1 kubernetes kubernetes      2537 ene 16 22:54 run.sh
+-rwxr-xr-x. 1 kubernetes kubernetes      2522 ene 16 22:54 run-helper.sh.template
+-rw-r--r--. 1 kubernetes kubernetes      1486 ene 16 22:54 run-helper.cmd.template
+-rwxr-xr-x. 1 kubernetes kubernetes       646 ene 16 22:54 env.sh
+-rwxr-xr-x. 1 kubernetes kubernetes      2458 ene 16 22:54 config.sh
+drwxr-xr-x. 6 kubernetes kubernetes        76 ene 16 22:55 externals
+drwxr-xr-x. 4 kubernetes kubernetes     12288 ene 16 22:55 bin
+-rw-r--r--. 1 kubernetes kubernetes 188638107 ene 27 23:50 actions-runner-linux-x64-2.312.0.tar.gz
+[kubernetes@localhost actions-runner]$ ./config.sh --url https://github.com/hhochkofler/ITforever --token AVZRF64H65QRQR4YEWDLUBLFWXSU4
+
+--------------------------------------------------------------------------------
+|        ____ _ _   _   _       _          _        _   _                      |
+|       / ___(_) |_| | | |_   _| |__      / \   ___| |_(_) ___  _ __  ___      |
+|      | |  _| | __| |_| | | | | '_ \    / _ \ / __| __| |/ _ \| '_ \/ __|     |
+|      | |_| | | |_|  _  | |_| | |_) |  / ___ \ (__| |_| | (_) | | | \__ \     |
+|       \____|_|\__|_| |_|\__,_|_.__/  /_/   \_\___|\__|_|\___/|_| |_|___/     |
+|                                                                              |
+|                       Self-hosted runner registration                        |
+|                                                                              |
+--------------------------------------------------------------------------------
+
+# Authentication
+
+
+√ Connected to GitHub
+
+# Runner Registration
+
+Enter the name of the runner group to add this runner to: [press Enter for Default]
+
+Enter the name of runner: [press Enter for localhost] github-runner-01
+
+This runner will have the following labels: 'self-hosted', 'Linux', 'X64'
+Enter any additional labels (ex. label-1,label-2): [press Enter to skip] label-1,label-2
+
+√ Runner successfully added
+√ Runner connection is good
+
+# Runner settings
+
+Enter name of work folder: [press Enter for _work]
+
+√ Settings Saved.
+
+[kubernetes@localhost actions-runner]$ ls -ltr
+total 184268
+-rwxr-xr-x. 1 kubernetes kubernetes        65 ene 16 22:54 safe_sleep.sh
+-rwxr-xr-x. 1 kubernetes kubernetes      2537 ene 16 22:54 run.sh
+-rwxr-xr-x. 1 kubernetes kubernetes      2522 ene 16 22:54 run-helper.sh.template
+-rw-r--r--. 1 kubernetes kubernetes      1486 ene 16 22:54 run-helper.cmd.template
+-rwxr-xr-x. 1 kubernetes kubernetes       646 ene 16 22:54 env.sh
+-rwxr-xr-x. 1 kubernetes kubernetes      2458 ene 16 22:54 config.sh
+drwxr-xr-x. 6 kubernetes kubernetes        76 ene 16 22:55 externals
+drwxr-xr-x. 4 kubernetes kubernetes     12288 ene 16 22:55 bin
+-rw-r--r--. 1 kubernetes kubernetes 188638107 ene 27 23:50 actions-runner-linux-x64-2.312.0.tar.gz
+drwxr-xr-x. 2 kubernetes kubernetes        44 ene 28 00:13 _diag
+-rwxr-xr-x. 1 kubernetes kubernetes      5242 ene 28 00:19 svc.sh
+[kubernetes@localhost actions-runner]$ ls -lat
+total 184292
+drwxr-xr-x. 5 kubernetes kubernetes      4096 ene 28 00:19 .
+-rwxr-xr-x. 1 kubernetes kubernetes      5242 ene 28 00:19 svc.sh
+-rw-r--r--. 1 kubernetes kubernetes       307 ene 28 00:19 .runner
+-rw-r--r--. 1 kubernetes kubernetes       266 ene 28 00:16 .credentials
+-rw-------. 1 kubernetes kubernetes      1667 ene 28 00:13 .credentials_rsaparams
+drwxr-xr-x. 2 kubernetes kubernetes        44 ene 28 00:13 _diag
+-rw-r--r--. 1 kubernetes kubernetes        17 ene 28 00:13 .env
+-rw-r--r--. 1 kubernetes kubernetes        99 ene 28 00:13 .path
+-rw-r--r--. 1 kubernetes kubernetes 188638107 ene 27 23:50 actions-runner-linux-x64-2.312.0.tar.gz
+drwxr-xr-x. 4 kubernetes kubernetes        43 ene 27 23:50 ..
+drwxr-xr-x. 4 kubernetes kubernetes     12288 ene 16 22:55 bin
+drwxr-xr-x. 6 kubernetes kubernetes        76 ene 16 22:55 externals
+-rwxr-xr-x. 1 kubernetes kubernetes      2458 ene 16 22:54 config.sh
+-rwxr-xr-x. 1 kubernetes kubernetes       646 ene 16 22:54 env.sh
+-rw-r--r--. 1 kubernetes kubernetes      1486 ene 16 22:54 run-helper.cmd.template
+-rwxr-xr-x. 1 kubernetes kubernetes      2522 ene 16 22:54 run-helper.sh.template
+-rwxr-xr-x. 1 kubernetes kubernetes      2537 ene 16 22:54 run.sh
+-rwxr-xr-x. 1 kubernetes kubernetes        65 ene 16 22:54 safe_sleep.sh
+[kubernetes@localhost actions-runner]$ ./run.sh
+
+√ Connected to GitHub
+
+Current runner version: '2.312.0'
+2024-01-28 05:25:45Z: Listening for Jobs
+^CExiting...
+Runner listener exit with 0 return code, stop the service, no retry needed.
+Exiting runner...
+[kubernetes@localhost actions-runner]$ ./svc.sh
+Must run as sudo
+[kubernetes@localhost actions-runner]$ sudo su
+[root@localhost actions-runner]# pwd
+/home/git/actions-runner
+[root@localhost actions-runner]# ./svc.sh
+
+Usage:
+./svc.sh [install, start, stop, status, uninstall]
+Commands:
+   install [user]: Install runner service as Root or specified user.
+   start: Manually start the runner service.
+   stop: Manually stop the runner service.
+   status: Display status of runner service.
+   uninstall: Uninstall runner service.
+
+[root@localhost actions-runner]# ./svc.sh install
+Creating launch runner in /etc/systemd/system/actions.runner.hhochkofler-ITforever.github-runner-01.service
+Run as user: kubernetes
+Run as uid: 1000
+gid: 1000
+Relabeled /etc/systemd/system/actions.runner.hhochkofler-ITforever.github-runner-01.service from unconfined_u:object_r:user_home_t:s0 to unconfined_u:object_r:systemd_unit_file_t:s0
+Created symlink /etc/systemd/system/multi-user.target.wants/actions.runner.hhochkofler-ITforever.github-runner-01.service → /etc/systemd/system/actions.runner.hhochkofler-ITforever.github-runner-01.service.
+[root@localhost actions-runner]# ./svc.sh status
+
+/etc/systemd/system/actions.runner.hhochkofler-ITforever.github-runner-01.service
+○ actions.runner.hhochkofler-ITforever.github-runner-01.service - GitHub Actions Runner (hhochkofler-ITforever.github-runner-01)
+     Loaded: loaded (/etc/systemd/system/actions.runner.hhochkofler-ITforever.github-runner-01.service; enabled; preset: disabled)
+    Drop-In: /usr/lib/systemd/system/service.d
+             └─10-timeout-abort.conf
+     Active: inactive (dead)
+[root@localhost actions-runner]# ./svc.sh start
+
+/etc/systemd/system/actions.runner.hhochkofler-ITforever.github-runner-01.service
+× actions.runner.hhochkofler-ITforever.github-runner-01.service - GitHub Actions Runner (hhochkofler-ITforever.github-runner-01)
+     Loaded: loaded (/etc/systemd/system/actions.runner.hhochkofler-ITforever.github-runner-01.service; enabled; preset: disabled)
+    Drop-In: /usr/lib/systemd/system/service.d
+             └─10-timeout-abort.conf
+     Active: failed (Result: exit-code) since Sun 2024-01-28 00:31:01 -05; 9ms ago
+   Duration: 3ms
+    Process: 676370 ExecStart=/home/git/actions-runner/runsvc.sh (code=exited, status=203/EXEC)
+   Main PID: 676370 (code=exited, status=203/EXEC)
+        CPU: 1ms
+
+ene 28 00:31:01 localhost.localdomain systemd[1]: Started actions.runner.hhochkofler-ITforever.github-runner-01.service - GitHub Actions Runner (hhochkofler-ITforever.github-runner-01).
+ene 28 00:31:01 localhost.localdomain (unsvc.sh)[676370]: actions.runner.hhochkofler-ITforever.github-runner-01.service: Failed to locate executable /home/git/actions-runner/ru…ission denied
+ene 28 00:31:01 localhost.localdomain (unsvc.sh)[676370]: actions.runner.hhochkofler-ITforever.github-runner-01.service: Failed at step EXEC spawning /home/git/actions-runner/r…ission denied
+ene 28 00:31:01 localhost.localdomain systemd[1]: actions.runner.hhochkofler-ITforever.github-runner-01.service: Main process exited, code=exited, status=203/EXEC
+ene 28 00:31:01 localhost.localdomain systemd[1]: actions.runner.hhochkofler-ITforever.github-runner-01.service: Failed with result 'exit-code'.
+Hint: Some lines were ellipsized, use -l to show in full.
+[root@localhost actions-runner]# ls -ltr
+total 184276
+-rwxr-xr-x. 1 kubernetes kubernetes        65 ene 16 22:54 safe_sleep.sh
+-rwxr-xr-x. 1 kubernetes kubernetes      2537 ene 16 22:54 run.sh
+-rwxr-xr-x. 1 kubernetes kubernetes      2522 ene 16 22:54 run-helper.sh.template
+-rw-r--r--. 1 kubernetes kubernetes      1486 ene 16 22:54 run-helper.cmd.template
+-rwxr-xr-x. 1 kubernetes kubernetes       646 ene 16 22:54 env.sh
+-rwxr-xr-x. 1 kubernetes kubernetes      2458 ene 16 22:54 config.sh
+drwxr-xr-x. 6 kubernetes kubernetes        76 ene 16 22:55 externals
+-rw-r--r--. 1 kubernetes kubernetes 188638107 ene 27 23:50 actions-runner-linux-x64-2.312.0.tar.gz
+-rwxr-xr-x. 1 kubernetes kubernetes      5242 ene 28 00:19 svc.sh
+-rwxr-xr-x. 1 kubernetes kubernetes      2522 ene 28 00:25 run-helper.sh
+drwxr-xr-x. 2 kubernetes kubernetes        82 ene 28 00:25 _diag
+drwxr-xr-x. 4 kubernetes kubernetes     12288 ene 28 00:29 bin
+-rwxr-xr-x. 1 kubernetes kubernetes       576 ene 28 00:29 runsvc.sh
+[root@localhost actions-runner]# cat runsvc.sh
+#!/bin/bash
+
+# convert SIGTERM signal to SIGINT
+# for more info on how to propagate SIGTERM to a child process see: http://veithen.github.io/2014/11/16/sigterm-propagation.html
+trap 'kill -INT $PID' TERM INT
+
+if [ -f ".path" ]; then
+    # configure
+    export PATH=`cat .path`
+    echo ".path=${PATH}"
+fi
+
+nodever=${GITHUB_ACTIONS_RUNNER_FORCED_NODE_VERSION:-node16}
+
+# insert anything to setup env when running as a service
+# run the host process which keep the listener alive
+./externals/$nodever/bin/node ./bin/RunnerService.js &
+PID=$!
+wait $PID
+trap - TERM INT
+wait $PID
+[root@localhost actions-runner]# ./runsvc.sh
+.path=/home/kubernetes/.local/bin:/home/kubernetes/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin
+Starting Runner listener with startup type: service
+Started listener process, pid: 679043
+Started running service
+
+√ Connected to GitHub
+
+Current runner version: '2.312.0'
+2024-01-28 05:32:26Z: Listening for Jobs
+
+^CShutting down runner listener
+Sending SIGINT to runner listener to stop
+Sending SIGKILL to runner listener
+Shutting down runner listener
+Sending SIGINT to runner listener to stop
+Sending SIGKILL to runner listener
+Exiting...
+Exiting...
+Exiting...
+Runner listener exited with error code 0
+Runner listener exit with 0 return code, stop the service, no retry needed.
+[root@localhost actions-runner]# nohup ./runsvc.sh &                              <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+[1] 686384
+[root@localhost actions-runner]# nohup: se descarta la entrada y se añade la salida a 'nohup.out'
+
+[root@localhost actions-runner]#
+[root@localhost actions-runner]#
+[root@localhost actions-runner]# ps -ef | grep -i runn
+root      686386  686384  0 00:36 pts/0    00:00:00 ./externals/node16/bin/node ./bin/RunnerService.js
+root      686393  686386  1 00:36 pts/0    00:00:01 /home/git/actions-runner/bin/Runner.Listener run --startuptype service
+root      689035  672211  0 00:37 pts/0    00:00:00 grep --color=auto -i runn
+[root@localhost actions-runner]# pwd
+/home/git/actions-runner
+[root@localhost actions-runner]# ls -ltr
+total 184280
+-rwxr-xr-x. 1 kubernetes kubernetes        65 ene 16 22:54 safe_sleep.sh
+-rwxr-xr-x. 1 kubernetes kubernetes      2537 ene 16 22:54 run.sh
+-rwxr-xr-x. 1 kubernetes kubernetes      2522 ene 16 22:54 run-helper.sh.template
+-rw-r--r--. 1 kubernetes kubernetes      1486 ene 16 22:54 run-helper.cmd.template
+-rwxr-xr-x. 1 kubernetes kubernetes       646 ene 16 22:54 env.sh
+-rwxr-xr-x. 1 kubernetes kubernetes      2458 ene 16 22:54 config.sh
+drwxr-xr-x. 6 kubernetes kubernetes        76 ene 16 22:55 externals
+-rw-r--r--. 1 kubernetes kubernetes 188638107 ene 27 23:50 actions-runner-linux-x64-2.312.0.tar.gz
+-rwxr-xr-x. 1 kubernetes kubernetes      5242 ene 28 00:19 svc.sh
+-rwxr-xr-x. 1 kubernetes kubernetes      2522 ene 28 00:25 run-helper.sh
+drwxr-xr-x. 4 kubernetes kubernetes     12288 ene 28 00:29 bin
+-rwxr-xr-x. 1 kubernetes kubernetes       576 ene 28 00:29 runsvc.sh
+drwxr-xr-x. 2 kubernetes kubernetes       158 ene 28 00:36 _diag
+-rw-------. 1 root       root             320 ene 28 00:36 nohup.out
+[root@localhost actions-runner]#
