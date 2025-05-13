@@ -1,0 +1,173 @@
+# Fargate Profile for multiple microservices
+resource "aws_eks_fargate_profile" "microservices" {
+  cluster_name           = aws_eks_cluster.main.name
+  fargate_profile_name   = "microservices-profile"
+  pod_execution_role_arn = aws_iam_role.fargate_pod_execution_role.arn
+  subnet_ids             = var.private_subnet_ids
+
+  selector {
+    namespace = "microservices"
+    labels = {
+      environment = "prod"
+    }
+  }
+}
+
+# Backend API Deployment
+resource "kubernetes_deployment" "backend_api" {
+  metadata {
+    name      = "backend-api"
+    namespace = "microservices"
+  }
+
+  spec {
+    replicas = 2
+
+    selector {
+      match_labels = {
+        app = "backend-api"
+      }
+    }
+
+    template {
+      metadata {
+        labels = {
+          app         = "backend-api"
+          environment = "prod"
+        }
+      }
+
+      spec {
+        container {
+          name  = "api"
+          image = "my-backend-api:latest"
+
+          resources {
+            limits = {
+              cpu    = "1000m"
+              memory = "1Gi"
+            }
+            requests = {
+              cpu    = "500m"
+              memory = "512Mi"
+            }
+          }
+
+          env {
+            name  = "DATABASE_URL"
+            value = var.database_url
+          }
+
+          port {
+            container_port = 8080
+          }
+
+          liveness_probe {
+            http_get {
+              path = "/health"
+              port = 8080
+            }
+            initial_delay_seconds = 30
+            period_seconds       = 10
+          }
+        }
+      }
+    }
+  }
+}
+
+# Frontend Deployment
+resource "kubernetes_deployment" "frontend" {
+  metadata {
+    name      = "frontend"
+    namespace = "microservices"
+  }
+
+  spec {
+    replicas = 2
+
+    selector {
+      match_labels = {
+        app = "frontend"
+      }
+    }
+
+    template {
+      metadata {
+        labels = {
+          app         = "frontend"
+          environment = "prod"
+        }
+      }
+
+      spec {
+        container {
+          name  = "frontend"
+          image = "my-frontend-app:latest"
+
+          resources {
+            limits = {
+              cpu    = "500m"
+              memory = "512Mi"
+            }
+            requests = {
+              cpu    = "250m"
+              memory = "256Mi"
+            }
+          }
+
+          env {
+            name  = "API_URL"
+            value = "http://backend-api-service:8080"
+          }
+
+          port {
+            container_port = 80
+          }
+        }
+      }
+    }
+  }
+}
+
+# Services
+resource "kubernetes_service" "backend_api" {
+  metadata {
+    name      = "backend-api-service"
+    namespace = "microservices"
+  }
+
+  spec {
+    selector = {
+      app = "backend-api"
+    }
+
+    port {
+      port        = 8080
+      target_port = 8080
+    }
+
+    type = "ClusterIP"
+  }
+}
+
+resource "kubernetes_service" "frontend" {
+  metadata {
+    name      = "frontend-service"
+    namespace = "microservices"
+  }
+
+  spec {
+    selector = {
+      app = "frontend"
+    }
+
+    port {
+      port        = 80
+      target_port = 80
+    }
+
+    type = "LoadBalancer"
+  }
+}
+

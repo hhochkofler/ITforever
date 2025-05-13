@@ -1,0 +1,94 @@
+# EKS Cluster
+resource "aws_eks_cluster" "main" {
+  name     = "my-eks-cluster"
+  role_arn = aws_iam_role.eks_cluster_role.arn
+  version  = "1.27"
+
+  vpc_config {
+    subnet_ids = var.private_subnet_ids
+  }
+}
+
+# Fargate Profile
+resource "aws_eks_fargate_profile" "main" {
+  cluster_name           = aws_eks_cluster.main.name
+  fargate_profile_name   = "web-app-profile"
+  pod_execution_role_arn = aws_iam_role.fargate_pod_execution_role.arn
+  subnet_ids             = var.private_subnet_ids
+
+  selector {
+    namespace = "web-app"
+    labels = {
+      app = "web"
+    }
+  }
+}
+
+# Kubernetes Deployment
+resource "kubernetes_deployment" "web_app" {
+  metadata {
+    name      = "web-app"
+    namespace = "web-app"
+  }
+
+  spec {
+    replicas = 3
+
+    selector {
+      match_labels = {
+        app = "web"
+      }
+    }
+
+    template {
+      metadata {
+        labels = {
+          app = "web"
+        }
+      }
+
+      spec {
+        container {
+          name  = "web-app"
+          image = "nginx:latest"
+
+          resources {
+            limits = {
+              cpu    = "500m"
+              memory = "512Mi"
+            }
+            requests = {
+              cpu    = "250m"
+              memory = "256Mi"
+            }
+          }
+
+          port {
+            container_port = 80
+          }
+        }
+      }
+    }
+  }
+}
+
+# Service
+resource "kubernetes_service" "web_app" {
+  metadata {
+    name      = "web-app-service"
+    namespace = "web-app"
+  }
+
+  spec {
+    selector = {
+      app = "web"
+    }
+
+    port {
+      port        = 80
+      target_port = 80
+    }
+
+    type = "LoadBalancer"
+  }
+}
