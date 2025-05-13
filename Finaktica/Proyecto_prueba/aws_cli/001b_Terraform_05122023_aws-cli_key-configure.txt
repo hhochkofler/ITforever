@@ -1,0 +1,64 @@
+[kubernetes@localhost ~]$ sudo su -
+[root@localhost ~]# ls -ltr
+total 84420
+-rw-------. 1 root root      823 oct 27 23:43 anaconda-ks.cfg
+-rw-r--r--. 1 root root 86435564 oct 28 08:45 minikube-linux-amd64
+-rwxr--r--. 1 root root      566 oct 28 10:32 init.sh
+
+[root@localhost ~]# cd /home/aws*
+
+[root@localhost aws-cli]# ls -ltr
+total 58432
+drwxr-xr-x. 3 root root       78 nov 30 22:22 aws
+-rw-r--r--. 1 root root 59832742 dic  4 13:58 awscliv2.zip
+
+[root@localhost aws-cli]# cd aws
+
+[root@localhost aws]# ls -ltr
+total 80
+-rw-r--r--. 1 root root 68282 nov 30 22:12 THIRD_PARTY_LICENSES
+-rw-r--r--. 1 root root  1465 nov 30 22:12 README.md
+-rwxr-xr-x. 1 root root  4047 nov 30 22:12 install
+drwxr-xr-x. 6 root root  4096 nov 30 22:22 dist
+
+[root@localhost aws]# aws --version
+
+aws-cli/2.14.5 Python/3.11.6 Linux/6.2.9-300.fc38.x86_64 exe/x86_64.fedora.38 prompt/off
+[root@localhost aws]#
+----------------------------------------------------------------------------------------------------------------------------
+[root@localhost aws]# aws configure
+AWS Access Key ID [None]: AKIAXRNJEBLX3WOEGUHE
+AWS Secret Access Key [None]:  ***********************************************
+Default region name [None]: us-west-2
+Default output format [None]:
+[root@localhost aws]# uname -a
+Linux localhost.localdomain 6.2.9-300.fc38.x86_64 #1 SMP PREEMPT_DYNAMIC Thu Mar 30 22:32:58 UTC 2023 x86_64 GNU/Linux
+[root@localhost aws]# date
+mar 05 dic 2023 14:53:31 -05
+[root@localhost aws]# hostname
+localhost.localdomain
+[root@localhost aws]# ifconfig -a | grep 192.168
+        inet 192.168.49.1  netmask 255.255.255.0  broadcast 192.168.49.255
+        inet 192.168.1.79  netmask 255.255.255.0  broadcast 192.168.1.255
+[root@localhost aws]#
+----------------------------------------------------------------------------------------------------------------------------
+[root@localhost aws]# aws ec2 describe-instances
+{
+    "Reservations": []
+}
+[root@localhost aws]# aws iam list-users
+{
+    "Users": [
+        {
+            "Path": "/",
+            "UserName": "hhochkofler",
+            "UserId": "AIDAXRNJEBLXQGFSJ3ZKE",
+            "Arn": "arn:aws:iam::518435113711:user/hhochkofler",
+            "CreateDate": "2023-12-05T18:54:42+00:00",
+            "PasswordLastUsed": "2023-12-05T19:46:42+00:00"
+        }
+    ]
+}
+[root@localhost aws]#
+----------------------------------------------------------------------------------------------------------------------------
+

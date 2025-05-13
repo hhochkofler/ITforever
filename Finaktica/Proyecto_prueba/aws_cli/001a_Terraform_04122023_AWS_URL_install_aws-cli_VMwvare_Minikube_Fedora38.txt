@@ -1,0 +1,24 @@
+
+---------------------------------------------------------------------------------------------------------------
+https://docs.aws.amazon.com/es_es/cli/latest/userguide/getting-started-install.html
+
+------------------------------
+INSTALAR AWS CLI en Fedora 38
+------------------------------
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+unzip awscliv2.zip
+sudo ./aws/install
+
+
+---------------------------------------------------------------------------------------------------------------
+
+[root@localhost terraform]# curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 57.0M  100 57.0M    0     0  24.2M      0  0:00:02  0:00:02 --:--:-- 24.2M
+[root@localhost terraform]#
+
+---------------------------------------------------------------------------------------------------------------
+
+
+
