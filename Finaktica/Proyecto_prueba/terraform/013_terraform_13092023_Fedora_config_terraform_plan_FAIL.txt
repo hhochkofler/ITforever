@@ -1,0 +1,51 @@
+-----------------------------------------------------------------------------------------------------------------------------------------
+
+[root@localhost terraform]# terraform plan
+
+Planning failed. Terraform encountered an error while generating this plan.
+
+╷
+│ Error: Error pinging Docker server: Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?
+│
+│   with provider["registry.terraform.io/kreuzwerker/docker"],
+│   on main.tf line 10, in provider "docker":
+│   10: provider "docker" {
+│
+╵
+[root@localhost terraform]#
+
+-----------------------------------------------------------------------------------------------------------------------------------------
+ARRANCAR DOCKER desde ROOT
+
+[root@localhost terraform]# systemctl start docker
+[root@localhost terraform]#
+
+STATUS DOCKER desde ROOT
+systemctl status docker
+
+[root@localhost terraform]# systemctl status docker
+● docker.service - Docker Application Container Engine
+     Loaded: loaded (/usr/lib/systemd/system/docker.service; disabled; preset: disabled)
+     Active: active (running) since Wed 2023-09-13 20:35:31 -05; 48s ago
+TriggeredBy: ● docker.socket
+       Docs: https://docs.docker.com
+   Main PID: 3967 (dockerd)
+      Tasks: 11
+     Memory: 100.9M
+        CPU: 3.409s
+     CGroup: /system.slice/docker.service
+             └─3967 /usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock
+
+sep 13 20:35:24 localhost.localdomain dockerd[3967]: time="2023-09-13T20:35:24.357248842-05:00" level=info msg="Firewalld: docker zone already exists, returning"
+sep 13 20:35:26 localhost.localdomain dockerd[3967]: time="2023-09-13T20:35:26.502820212-05:00" level=info msg="Firewalld: interface br-d8b57abcd2fa already part of docker >
+sep 13 20:35:27 localhost.localdomain dockerd[3967]: time="2023-09-13T20:35:27.508777489-05:00" level=info msg="Firewalld: interface docker0 already part of docker zone, re>
+sep 13 20:35:28 localhost.localdomain dockerd[3967]: time="2023-09-13T20:35:28.957560769-05:00" level=info msg="Default bridge (docker0) is assigned with an IP address 172.>
+sep 13 20:35:29 localhost.localdomain dockerd[3967]: time="2023-09-13T20:35:29.677399670-05:00" level=info msg="Firewalld: interface docker0 already part of docker zone, re>
+sep 13 20:35:30 localhost.localdomain dockerd[3967]: time="2023-09-13T20:35:30.368741900-05:00" level=info msg="Loading containers: done."
+sep 13 20:35:30 localhost.localdomain dockerd[3967]: time="2023-09-13T20:35:30.852040089-05:00" level=info msg="Docker daemon" commit=1a79695 graphdriver=overlay2 version=2>
+sep 13 20:35:30 localhost.localdomain dockerd[3967]: time="2023-09-13T20:35:30.852769062-05:00" level=info msg="Daemon has completed initialization"
+sep 13 20:35:31 localhost.localdomain dockerd[3967]: time="2023-09-13T20:35:31.105415701-05:00" level=info msg="API listen on /run/docker.sock"
+sep 13 20:35:31 localhost.localdomain systemd[1]: Started docker.service - Docker Application Container Engine.
+lines 1-22/22 (END)
+
+-----------------------------------------------------------------------------------------------------------------------------------------

@@ -1,0 +1,71 @@
+[root@localhost terraform]# terraform apply
+
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
+  + create
+
+Terraform will perform the following actions:
+
+  # docker_container.fedora will be created
+  + resource "docker_container" "fedora" {
+      + attach                                      = false
+      + bridge                                      = (known after apply)
+      + command                                     = [
+          + "/bin/bash",
+          + "-c",
+          + "while true; do sleep 60000; done",
+        ]
+      + container_logs                              = (known after apply)
+      + container_read_refresh_timeout_milliseconds = 15000
+      + entrypoint                                  = (known after apply)
+      + env                                         = (known after apply)
+      + exit_code                                   = (known after apply)
+      + hostname                                    = (known after apply)
+      + id                                          = (known after apply)
+      + image                                       = "fedora"
+      + init                                        = (known after apply)
+      + ipc_mode                                    = (known after apply)
+      + log_driver                                  = (known after apply)
+      + logs                                        = false
+      + must_run                                    = true
+      + name                                        = "fedora01"
+      + network_data                                = (known after apply)
+      + read_only                                   = false
+      + remove_volumes                              = true
+      + restart                                     = "no"
+      + rm                                          = false
+      + runtime                                     = (known after apply)
+      + security_opts                               = (known after apply)
+      + shm_size                                    = (known after apply)
+      + start                                       = true
+      + stdin_open                                  = false
+      + stop_signal                                 = (known after apply)
+      + stop_timeout                                = (known after apply)
+      + tty                                         = false
+      + wait                                        = false
+      + wait_timeout                                = 60
+    }
+
+Plan: 1 to add, 0 to change, 0 to destroy.
+
+Do you want to perform these actions?
+  Terraform will perform the actions described above.
+  Only 'yes' will be accepted to approve.
+
+  Enter a value: yes
+
+docker_container.fedora: Creating...
+docker_container.fedora: Still creating... [10s elapsed]
+docker_container.fedora: Still creating... [20s elapsed]
+docker_container.fedora: Still creating... [30s elapsed]
+docker_container.fedora: Still creating... [40s elapsed]
+docker_container.fedora: Still creating... [50s elapsed]
+docker_container.fedora: Still creating... [1m0s elapsed]
+docker_container.fedora: Still creating... [1m10s elapsed]
+docker_container.fedora: Creation complete after 1m13s [id=bb37020f25f52ec35f3334b24ee80e86f0bee1e9567e7ad5747608d3acfb7267]
+
+Apply complete! Resources: 1 added, 0 changed, 0 destroyed.
+
+[root@localhost terraform]# docker ps
+CONTAINER ID   IMAGE     COMMAND                  CREATED         STATUS         PORTS     NAMES
+bb37020f25f5   fedora    "/bin/bash -c 'while…"   2 minutes ago   Up 2 minutes             fedora01
+[root@localhost terraform]#

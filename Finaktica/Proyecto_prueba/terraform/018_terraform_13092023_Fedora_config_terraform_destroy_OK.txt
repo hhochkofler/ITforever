@@ -1,0 +1,193 @@
+[root@localhost terraform]# cat main.tf
+terraform {
+  required_providers {
+    docker = {
+      source  = "kreuzwerker/docker"
+      version = "3.0.2"
+    }
+  }
+}
+
+provider "docker" {
+
+        }
+
+resource "docker_container" "fedora" {
+        name = "fedora01"
+        image = "fedora"
+        command = [ "/bin/bash","-c","while true; do sleep 60000; done" ]
+
+        provisioner "local-exec" {
+                command = "echo ${docker_container.fedora.network_data[0].ip_address} >> inventory.txt"
+                }
+        }
+
+[root@localhost terraform]# terraform apply
+docker_container.fedora: Refreshing state... [id=bb37020f25f52ec35f3334b24ee80e86f0bee1e9567e7ad5747608d3acfb7267]
+
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
+-/+ destroy and then create replacement
+
+Terraform will perform the following actions:
+
+  # docker_container.fedora must be replaced
+-/+ resource "docker_container" "fedora" {
+      + bridge                                      = (known after apply)
+      + container_logs                              = (known after apply)
+      - cpu_shares                                  = 0 -> null
+      - dns                                         = [] -> null
+      - dns_opts                                    = [] -> null
+      - dns_search                                  = [] -> null
+      ~ entrypoint                                  = [] -> (known after apply)
+      ~ env                                         = [] -> (known after apply)
+      + exit_code                                   = (known after apply)
+      - group_add                                   = [] -> null
+      ~ hostname                                    = "bb37020f25f5" -> (known after apply)
+      ~ id                                          = "bb37020f25f52ec35f3334b24ee80e86f0bee1e9567e7ad5747608d3acfb7267" -> (known after apply)
+      ~ image                                       = "sha256:6b9fae4fa405599ad15fed7742310e91f34593a5a8d2da4c9ffe67107385e729" -> "fedora" # forces replacement
+      ~ init                                        = false -> (known after apply)
+      ~ ipc_mode                                    = "private" -> (known after apply)
+      ~ log_driver                                  = "json-file" -> (known after apply)
+      - log_opts                                    = {} -> null
+      - max_retry_count                             = 0 -> null
+      - memory                                      = 0 -> null
+      - memory_swap                                 = 0 -> null
+        name                                        = "fedora01"
+      ~ network_data                                = [
+          - {
+              - gateway                   = "172.17.0.1"
+              - global_ipv6_address       = ""
+              - global_ipv6_prefix_length = 0
+              - ip_address                = "172.17.0.2"
+              - ip_prefix_length          = 16
+              - ipv6_gateway              = ""
+              - mac_address               = "02:42:ac:11:00:02"
+              - network_name              = "bridge"
+            },
+        ] -> (known after apply)
+      - network_mode                                = "default" -> null
+      - privileged                                  = false -> null
+      - publish_all_ports                           = false -> null
+      ~ runtime                                     = "runc" -> (known after apply)
+      ~ security_opts                               = [] -> (known after apply)
+      ~ shm_size                                    = 64 -> (known after apply)
+      + stop_signal                                 = (known after apply)
+      ~ stop_timeout                                = 0 -> (known after apply)
+      - storage_opts                                = {} -> null
+      - sysctls                                     = {} -> null
+      - tmpfs                                       = {} -> null
+        # (14 unchanged attributes hidden)
+    }
+
+Plan: 1 to add, 0 to change, 1 to destroy.
+
+Do you want to perform these actions?
+  Terraform will perform the actions described above.
+  Only 'yes' will be accepted to approve.
+
+  Enter a value: yes
+
+docker_container.fedora: Destroying... [id=bb37020f25f52ec35f3334b24ee80e86f0bee1e9567e7ad5747608d3acfb7267]
+docker_container.fedora: Destruction complete after 0s
+docker_container.fedora: Creating...
+docker_container.fedora: Provisioning with 'local-exec'...
+docker_container.fedora (local-exec): Executing: ["/bin/sh" "-c" "echo 172.17.0.2 >> inventory.txt"]
+docker_container.fedora: Creation complete after 2s [id=674ed4df6fd188c3bc7aceb290c48a1d0e87baffb1bc10e19061b000e312c17d]
+
+Apply complete! Resources: 1 added, 0 changed, 1 destroyed.
+[root@localhost terraform]# docker ps
+CONTAINER ID   IMAGE     COMMAND                  CREATED          STATUS          PORTS     NAMES
+674ed4df6fd1   fedora    "/bin/bash -c 'while…"   16 seconds ago   Up 13 seconds             fedora01
+[root@localhost terraform]# ls -ltr
+total 16
+-rw-r--r--. 1 root root  489 sep 13 21:54 main.tf
+-rw-r--r--. 1 root root 3250 sep 13 21:59 terraform.tfstate.backup
+-rw-r--r--. 1 root root   11 sep 13 22:00 inventory.txt
+-rw-r--r--. 1 root root 3250 sep 13 22:00 terraform.tfstate
+[root@localhost terraform]# cat inventory.txt
+172.17.0.2
+[root@localhost terraform]# terraform destroy
+docker_container.fedora: Refreshing state... [id=674ed4df6fd188c3bc7aceb290c48a1d0e87baffb1bc10e19061b000e312c17d]
+
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
+  - destroy
+
+Terraform will perform the following actions:
+
+  # docker_container.fedora will be destroyed
+  - resource "docker_container" "fedora" {
+      - attach                                      = false -> null
+      - command                                     = [
+          - "/bin/bash",
+          - "-c",
+          - "while true; do sleep 60000; done",
+        ] -> null
+      - container_read_refresh_timeout_milliseconds = 15000 -> null
+      - cpu_shares                                  = 0 -> null
+      - dns                                         = [] -> null
+      - dns_opts                                    = [] -> null
+      - dns_search                                  = [] -> null
+      - entrypoint                                  = [] -> null
+      - env                                         = [] -> null
+      - group_add                                   = [] -> null
+      - hostname                                    = "674ed4df6fd1" -> null
+      - id                                          = "674ed4df6fd188c3bc7aceb290c48a1d0e87baffb1bc10e19061b000e312c17d" -> null
+      - image                                       = "sha256:6b9fae4fa405599ad15fed7742310e91f34593a5a8d2da4c9ffe67107385e729" -> null
+      - init                                        = false -> null
+      - ipc_mode                                    = "private" -> null
+      - log_driver                                  = "json-file" -> null
+      - log_opts                                    = {} -> null
+      - logs                                        = false -> null
+      - max_retry_count                             = 0 -> null
+      - memory                                      = 0 -> null
+      - memory_swap                                 = 0 -> null
+      - must_run                                    = true -> null
+      - name                                        = "fedora01" -> null
+      - network_data                                = [
+          - {
+              - gateway                   = "172.17.0.1"
+              - global_ipv6_address       = ""
+              - global_ipv6_prefix_length = 0
+              - ip_address                = "172.17.0.2"
+              - ip_prefix_length          = 16
+              - ipv6_gateway              = ""
+              - mac_address               = "02:42:ac:11:00:02"
+              - network_name              = "bridge"
+            },
+        ] -> null
+      - network_mode                                = "default" -> null
+      - privileged                                  = false -> null
+      - publish_all_ports                           = false -> null
+      - read_only                                   = false -> null
+      - remove_volumes                              = true -> null
+      - restart                                     = "no" -> null
+      - rm                                          = false -> null
+      - runtime                                     = "runc" -> null
+      - security_opts                               = [] -> null
+      - shm_size                                    = 64 -> null
+      - start                                       = true -> null
+      - stdin_open                                  = false -> null
+      - stop_timeout                                = 0 -> null
+      - storage_opts                                = {} -> null
+      - sysctls                                     = {} -> null
+      - tmpfs                                       = {} -> null
+      - tty                                         = false -> null
+      - wait                                        = false -> null
+      - wait_timeout                                = 60 -> null
+    }
+
+Plan: 0 to add, 0 to change, 1 to destroy.
+
+Do you really want to destroy all resources?
+  Terraform will destroy all your managed infrastructure, as shown above.
+  There is no undo. Only 'yes' will be accepted to confirm.
+
+  Enter a value: yes
+
+docker_container.fedora: Destroying... [id=674ed4df6fd188c3bc7aceb290c48a1d0e87baffb1bc10e19061b000e312c17d]
+docker_container.fedora: Destruction complete after 1s
+
+Destroy complete! Resources: 1 destroyed.
+[root@localhost terraform]# docker ps
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+[root@localhost terraform]#
