@@ -5,7 +5,7 @@ on:
 
 jobs:
   prueba:
-    runs-on: self-hosted # Obliga a usar tu máquina virtual
+    runs-on: [self-hosted, Linux, X64, localhost]
     steps:
       - name: Saludo desde la VM
         run: |
