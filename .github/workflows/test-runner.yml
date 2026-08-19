@@ -1,0 +1,15 @@
+name: Prueba de Runner Local
+
+on:
+  workflow_dispatch: # Permite activarlo manualmente con un botón
+
+jobs:
+  prueba:
+    runs-on: self-hosted # Obliga a usar tu máquina virtual
+    steps:
+      - name: Saludo desde la VM
+        run: |
+          echo "¡Hola! El runner funciona correctamente."
+          echo "Ejecutando en el usuario: $(whoami)"
+          echo "Fecha actual: $(date)"
+          
