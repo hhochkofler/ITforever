@@ -5,7 +5,7 @@ on:
 
 jobs:
   prueba:
-    runs-on: [self-hosted, Linux, X64, localhost]
+    runs-on: self-hosted
     steps:
       - name: Saludo desde la VM
         run: |
