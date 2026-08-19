@@ -12,3 +12,4 @@ jobs:
           echo "¡Hola! El runner funciona correctamente."
           echo "Ejecutando en el usuario: $(whoami)"
           echo "Fecha actual: $(date)"
+          aws iam list-users
