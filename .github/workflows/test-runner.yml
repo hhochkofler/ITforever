@@ -5,11 +5,10 @@ on:
 
 jobs:
   prueba:
-    runs-on: self-hosted
+    runs-on: [self-hosted, Linux, X64]
     steps:
       - name: Saludo desde la VM
         run: |
           echo "¡Hola! El runner funciona correctamente."
           echo "Ejecutando en el usuario: $(whoami)"
           echo "Fecha actual: $(date)"
-          
